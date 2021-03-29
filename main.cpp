@@ -54,16 +54,10 @@ int main(int argc, char *argv[])
     Container<DeepPtr<Event>> z;
     vector<DeepPtr<Event>> zreal;
     DeepPtr<Event> zz(p);
-    //z.push_back(zz);
+    z.push_back(zz);
     zreal.push_back(zz);
-    cout<<zreal[0]->see()<<endl;
-    //cout<<z[0]->see();
-    DeepPtr<Event> zz2(m);
-    if(zz != zz2)
-        cout<<1<<endl;
-    else
-        cout<<0<<endl;
-    cout<<zz2->see();
+    cout<<z[0]->see()<<endl;
+
 
     return 0;//da togliere
 }

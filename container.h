@@ -264,7 +264,7 @@ void Container<Type>::push_back(Type value){
 
 template <class Type>
 void Container<Type>::resize(){
-    capacity = capacity*2;
+    capacity = std::max(1, capacity*2);
     Type* aux = new Type [capacity];
     for(int j = 0; j < numberOfElements; j++){
         aux[j] = info[j];
