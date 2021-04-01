@@ -24,6 +24,7 @@ SOURCES += \
     main.cpp \
     marathon.cpp \
     marriage.cpp \
+    organization.cpp \
     ratingerror.cpp \
     sport.cpp \
     tournament.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     eventcreator.h \
     marathon.h \
     marriage.h \
+    organization.h \
     ratingerror.h \
     sport.h \
     tournament.h \

@@ -17,7 +17,13 @@ public:
     T* operator->() const;
     bool operator==(const DeepPtr&) const;
     bool operator!=(const DeepPtr&) const;
+    T* getPunt() const;
 };
+
+template<class T>
+T* DeepPtr<T>::getPunt() const{
+    return punt;
+}
 
 template<class T>
 DeepPtr<T>::DeepPtr(T * p): punt(p)  {}

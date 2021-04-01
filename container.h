@@ -1,6 +1,3 @@
-#ifndef CONTAINER_H
-#define CONTAINER_H
-
 #include <iterator>
 #include<stdexcept>
 
@@ -43,6 +40,12 @@ public:
      * @return capacity
      */
     int getCapacity () const;
+
+    /**
+     * @brief funzione che ritorna il numero di elementi presenti  nel vettore
+     * @return numberOfElements
+     */
+    int getNumberOfElements () const;
 
     /**
      * @brief funzione booleana per capire se il vettore è vuoto
@@ -95,6 +98,8 @@ public:
      */
     const Type& operator [](int  index) const;
 
+    int search (const Type& Value) const;
+
     /* FUNZIONI DA IMPLEMENTARE AL BISOGNO
 
          * @brief overloading operatore + per concatenare due vettori
@@ -125,21 +130,25 @@ public:
     bool operator == (const Container& c) const;
 
     class Iterator{
-    private:
-        Type* pointer;
-    public:
-        Iterator(Type* p);
-        Type& operator* () const;
-        Type* operator -> () const;
-        Iterator& operator ++ ();
-        Iterator& operator -- ();
-        bool operator == (const Iterator& i) const;
-        bool operator != (const Iterator& i) const;
+       private:
+           Type* pointer;
+       public:
+           Iterator(Type* p);
+           Type& operator* () const;
+           Type* operator -> () const;
+           Iterator& operator ++ ();
+           Iterator& operator ++ (int);
+           Iterator& operator -- ();
+           Iterator& operator -- (int);
+           bool operator == (const Iterator& i) const;
+           bool operator != (const Iterator& i) const;
 
-    };
+       };
 
-    Iterator begin () const;
-    Iterator end () const;
+       Iterator begin ();
+       Iterator end ();
+       Iterator erase (Iterator position);
+       Iterator erase (Iterator first, Iterator last);
 };
 
 template <class Type>
@@ -181,8 +190,8 @@ void Container<Type>::deepCopy(const Container &c){
 
 template <class Type>
 Container<Type>::~Container(){
-    if (info!=NULL)
-        delete[] info;
+    if (info)
+        delete [] info;
 }
 
 template <class Type>
@@ -195,6 +204,11 @@ int Container<Type>::getCapacity() const{
     return capacity;
 }
 
+template<class Type>
+int Container<Type>::getNumberOfElements() const{
+    return numberOfElements;
+}
+
 template <class Type>
 bool Container<Type>::isEmpty() const{
     if(numberOfElements == 0){
@@ -205,12 +219,8 @@ bool Container<Type>::isEmpty() const{
 
 template <class Type>
 void Container<Type>::clear(){
-    if(info != NULL){
-        delete[] info;
-    }
-    else {
-        numberOfElements = capacity = 0;
-        info = NULL;
+    for(int i = 0; i<=numberOfElements; i++){
+        remove(i);
     }
 }
 
@@ -248,7 +258,7 @@ void Container<Type>::insert(int index, Type value){
 
 template<class Type>
 void Container<Type>::remove(int index){
-    if(index < 0 || index >= numberOfElements){
+    if(index < 0 || index > numberOfElements){
         throw std::out_of_range("Container::remove(int index), index is out of range)");
     }
     for(int i = index; i < numberOfElements -1; i++){
@@ -264,7 +274,7 @@ void Container<Type>::push_back(Type value){
 
 template <class Type>
 void Container<Type>::resize(){
-    capacity = std::max(1, capacity*2);
+    capacity = std::max(1,capacity*2);
     Type* aux = new Type [capacity];
     for(int j = 0; j < numberOfElements; j++){
         aux[j] = info[j];
@@ -289,6 +299,21 @@ const Type& Container<Type>::operator [](int index) const {
         throw std::out_of_range("Container::operator[](int index), index is out of range");
     }
     return info[index];
+}
+
+template<class Type>
+int Container<Type>::search(const Type& Value)const{
+    int pos = -1;
+    bool flag = false;
+
+    for(int i = 0; i<numberOfElements && !flag; i++){
+        if(info[i]==Value){
+            pos = i;
+            flag = true;
+        }
+    }
+
+    return pos;
 }
 
 template<class Type>
@@ -317,13 +342,13 @@ bool Container<Type>::operator ==(const Container &c) const{
 }
 
 template<class Type>
-typename Container<Type>::Iterator Container<Type>::begin() const{
-    return Iterator(this);
+typename Container<Type>::Iterator Container<Type>::begin(){
+    return Iterator(info);
 }
 
 template<class Type>
-typename Container<Type>::Iterator Container<Type>::end() const{
-    return Iterator(info + numberOfElements);
+typename Container<Type>::Iterator Container<Type>::end(){
+    return Iterator(info+numberOfElements);
 }
 
 template<class Type>
@@ -361,4 +386,18 @@ bool Container<Type>::Iterator::operator !=(const Container<Type>::Iterator &i) 
     return pointer != i.pointer;
 }
 
-#endif // CONTAINER_H
+template<class Type>
+typename Container<Type>::Iterator &Container<Type>::Iterator::operator ++(int){
+    pointer++;
+    return *this;
+}
+
+template<class Type>
+typename Container<Type>::Iterator &Container<Type>::Iterator::operator--(int){
+    pointer--;
+    return *this;
+}
+
+/*template<class Type>
+typename Container<Type>::Iterator Container<Type>::erase(Container::Iterator position){
+}*/
