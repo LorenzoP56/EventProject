@@ -21,9 +21,11 @@ SOURCES += \
     date.cpp \
     event.cpp \
     eventcreator.cpp \
+    eventviewer.cpp \
     main.cpp \
     marathon.cpp \
     marriage.cpp \
+    modelevent.cpp \
     organization.cpp \
     ratingerror.cpp \
     sport.cpp \
@@ -40,8 +42,10 @@ HEADERS += \
     deepptr.h \
     event.h \
     eventcreator.h \
+    eventviewer.h \
     marathon.h \
     marriage.h \
+    modelevent.h \
     organization.h \
     ratingerror.h \
     sport.h \

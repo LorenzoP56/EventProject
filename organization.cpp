@@ -67,7 +67,7 @@ u_int Organization::getSize() const
 
 Event *Organization::getEvent(u_int i) const
 {
-    if (i < 0 || i > Eventi.size() - 1)
+    if (i > static_cast<u_int>(Eventi.size() - 1))
         throw std::out_of_range("indice fuori da vettore");
     else
         return Eventi[i].getPunt();

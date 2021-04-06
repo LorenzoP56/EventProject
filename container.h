@@ -1,3 +1,5 @@
+#ifndef CONTAINER_H
+#define CONTAINER_H
 #include <iterator>
 #include<stdexcept>
 
@@ -136,19 +138,17 @@ public:
            Iterator(Type* p);
            Type& operator* () const;
            Type* operator -> () const;
-           Iterator& operator ++ ();
-           Iterator& operator ++ (int);
-           Iterator& operator -- ();
-           Iterator& operator -- (int);
+           Iterator& operator++ ();
+           Iterator& operator++ (int);
+           Iterator& operator-- ();
+           Iterator& operator-- (int);
            bool operator == (const Iterator& i) const;
            bool operator != (const Iterator& i) const;
-
        };
 
        Iterator begin ();
        Iterator end ();
-       Iterator erase (Iterator position);
-       Iterator erase (Iterator first, Iterator last);
+       void erase (Iterator position);
 };
 
 template <class Type>
@@ -387,7 +387,7 @@ bool Container<Type>::Iterator::operator !=(const Container<Type>::Iterator &i) 
 }
 
 template<class Type>
-typename Container<Type>::Iterator &Container<Type>::Iterator::operator ++(int){
+typename Container<Type>::Iterator &Container<Type>::Iterator::operator++(int){
     pointer++;
     return *this;
 }
@@ -398,6 +398,14 @@ typename Container<Type>::Iterator &Container<Type>::Iterator::operator--(int){
     return *this;
 }
 
-/*template<class Type>
-typename Container<Type>::Iterator Container<Type>::erase(Container::Iterator position){
-}*/
+template<class Type>
+void Container<Type>::erase(Container::Iterator position){
+    int aux = 0;
+    Iterator p = begin();
+    while(p != position){
+        p++;
+        aux++;
+    }
+    remove(aux);
+}
+#endif
