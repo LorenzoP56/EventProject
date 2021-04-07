@@ -11,6 +11,8 @@
 #include<vector>
 #include<QInputDialog>
 #include<QDate>
+#include<event.h>
+#include<inputdialog.h>
 
 class EventViewer : public QWidget
 {
@@ -30,9 +32,11 @@ private:
     void addControls();
 public:
     explicit EventViewer(QWidget *parent = nullptr);
+    void showThisEvent (Event* e) const;
     void showWarning(const QString&);
-    QString showAddEvent();
+    std::pair<int,QString*> showAddEvent();
     QString showRemoveEvent();
+
 signals:
 
 };

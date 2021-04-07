@@ -1,7 +1,8 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 #include <iterator>
-#include<stdexcept>
+#include <stdexcept>
+#include <algorithm>
 
 template <class Type>
 
