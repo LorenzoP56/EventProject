@@ -1,29 +1,27 @@
 #include "eventviewer.h"
 #include<iostream>
 
-EventViewer::EventViewer(QWidget *parent) : QWidget(parent)
-{
+EventViewer::EventViewer(QWidget *parent) : QWidget(parent){
+
     mainLayout = new QVBoxLayout;
-    secondLayout = new QHBoxLayout;
-    thirdLayout = new QVBoxLayout;
-    fourthLayout = new QVBoxLayout;
+    lblCalendarLayout = new QHBoxLayout;
+    buttonLayout = new QHBoxLayout;
+    lineLayout = new QVBoxLayout;
 
     addMenus();
 
-    mainLayout->addLayout(secondLayout);
-    secondLayout->addLayout(thirdLayout);
-    secondLayout->addLayout(fourthLayout);
+    addLabel();
 
     addCalendar();
 
-    addLabel();
+    addLine();
 
     addControls();
 
     setLayout(mainLayout);
     resize(QSize(1024, 720));
 
-    showAddEvent();
+    //showAddEvent();
     //std::cout<<showRemoveEvent().toUtf8().constData()<<std::endl;
 }
 
@@ -50,7 +48,7 @@ std::pair<int, QString *> EventViewer::showAddEvent(){
     return a;//creare classe derivata da QDialog*/
     bool ok;
     QStringList list = InputDialog::getStrings(this,&ok,1);
-    label->setText(list[0]+"\n"+list[1]);
+    //label->setText(list[0]+"\n"+list[1]);
 }
 
 QString EventViewer::showRemoveEvent()
@@ -59,19 +57,34 @@ QString EventViewer::showRemoveEvent()
     return titolo;
 }
 
-void EventViewer::addMenus()
-{
+void EventViewer::addMenus(){
     menuBar = new QMenuBar(this);
     QMenu* file = new QMenu("File", menuBar);
-    QMenu* exit = new QMenu("Exit", menuBar);
+    QMenu* exit = new QMenu("Calendario", menuBar);
+    QMenu* control = new QMenu("Controlli", menuBar);
 
-    menuBar->addMenu(file);
     menuBar->addMenu(exit);
+    menuBar->addMenu(file);
+    menuBar->addMenu(control);
 
-    file->addAction(new QAction("inserisci", file));
-    file->addAction(new QAction("elimina", file));
+    QMenu* inserisci = file->addMenu("Inserisci nuovo evento");
+    QAction* elimina = file->addAction("Elimina");
 
-    exit->addAction(new QAction("exit", exit));
+    QAction* actionInsertFiera = inserisci->addAction("Fiera");
+    QAction* actionInsertBachelor = inserisci->addAction("Bachelor");
+    QAction* actionInsertMarriage = inserisci->addAction("Marriage");
+    QAction* actionInserisciTournament = inserisci->addAction("Tournament");
+    QAction* actionInserisciMarathon = inserisci->addAction("Marathon");
+
+    QAction* actionExport = exit->addAction("Esporta eventi");
+    QAction* actionImport = exit->addAction("Importa eventi");
+    QAction* actionClose = exit->addAction("Termina programma");
+
+    QAction* actionNext = control->addAction("Prossimo");
+    QAction* actionPrevious = control->addAction("Precedente");
+    QAction* actionFirst = control->addAction("Primo");
+    QAction* actionLast = control->addAction("Ultimo");
+
 
     menuBar->setStyleSheet("background:#f3efe8; color:#383232;");
 
@@ -80,6 +93,7 @@ void EventViewer::addMenus()
 
 void EventViewer::addCalendar()
 {
+
     calendar = new QCalendarWidget(this);
     calendar->setMinimumDate(QDate(2021, 1, 1));
     calendar->setMaximumDate(QDate(2021, 12, 31));
@@ -87,34 +101,98 @@ void EventViewer::addCalendar()
     QTextCharFormat a = QTextCharFormat();
     a.setFont(QFont("Comic Sans MS"), QTextCharFormat::FontPropertiesAll);
     calendar->setDateTextFormat(QDate(2021, 2,1), a);
-    fourthLayout->addWidget(calendar);
+    calendar->setVerticalHeaderFormat(calendar->NoVerticalHeader);
+
+    lblCalendarLayout->addWidget(calendar);
+
+    mainLayout->addLayout(lblCalendarLayout);
 }
 
-void EventViewer::addLabel()
-{
+void EventViewer::addLabel(){
+
+    QHBoxLayout* headerHLayout = new QHBoxLayout;
+
+    QVBoxLayout* headerVLayout = new QVBoxLayout;
+
+    QVBoxLayout* lblVLayout = new QVBoxLayout;
+
+    QFont font;
+
+    QLabel* lblDay = new QLabel(this);
+    lblDay->setText("1");
+    font = lblDay->font();
+    font.setPointSize(72);
+    font.setBold(true);
+    lblDay->setContentsMargins(25,0,0,0);
+    lblDay->setFont (font);
+
+    QLabel* lblMounth = new QLabel(this);
+    lblMounth->setText("APRILE 2021");
+    font = lblMounth->font();
+    font.setPointSize(24);
+    lblMounth->setFont(font);
+
+    QLabel* lblWeekDay = new QLabel(this);
+    lblWeekDay->setText("GIOVEDI'");
+    font = lblMounth->font();
+    font.setPointSize(32);
+    lblWeekDay->setFont(font);
+
+
+    headerVLayout->addWidget(lblWeekDay,60);
+    headerVLayout->addWidget(lblMounth,40);
+    headerVLayout->setMargin(0);
+    headerVLayout->setContentsMargins(0,0,25,0);
+
+    headerHLayout->addWidget(lblDay);
+
+    headerHLayout->addLayout(headerVLayout);
+
+    lblVLayout->addLayout(headerHLayout,20);
+
     label = new QLabel(this);
+
+    label->setMargin(25);
     label->setText("Evento dell'anno\nPer la compagnia Apple\ninvitati: 500\nPrezzo: 300€\nResponsabile: Nome Cognome");
     label->setStyleSheet("background:#383232; color: #f3efe8; font-size: 15px;");
-    fourthLayout->addWidget(label);
+
+    lblVLayout->addWidget(label,80);
+
+    lblCalendarLayout->addLayout(lblVLayout);
+
 }
 
 void EventViewer::addControls()
 {
-    QPushButton* insertEvent = new QPushButton("inserisci Evento", this);
-    QPushButton* dropEvent = new QPushButton("elimina Evento", this);
-    QPushButton* nextEvent = new QPushButton("prossimo Evento", this);
-    QPushButton* previuosEvent = new QPushButton("precedente Evento", this);
-    QPushButton* firstEvent = new QPushButton("primo Evento dell'anno", this);
-    QPushButton* lastEvent = new QPushButton("ultimo Evento dell'anno", this);
-    QPushButton* download = new QPushButton("scarica calendario", this);
-    QPushButton* upload = new QPushButton("inserisci calendario", this);
 
-    thirdLayout->addWidget(insertEvent);
-    thirdLayout->addWidget(dropEvent);
-    thirdLayout->addWidget(nextEvent);
-    thirdLayout->addWidget(previuosEvent);
-    thirdLayout->addWidget(firstEvent);
-    thirdLayout->addWidget(lastEvent);
-    thirdLayout->addWidget(download);
-    thirdLayout->addWidget(upload);
+    QPushButton* previuosEvent = new QPushButton("Precedente evento", this);
+    QPushButton* nextEvent = new QPushButton("Prossimo evento", this);
+    QPushButton* firstEvent = new QPushButton("Primo evento dell'anno", this);
+    QPushButton* lastEvent = new QPushButton("Ultimo evento dell'anno", this);
+    QPushButton* download = new QPushButton("Scarica calendario", this);
+    QPushButton* upload = new QPushButton("Inserisci calendario", this);
+
+    buttonLayout->addWidget(previuosEvent);
+    buttonLayout->addWidget(nextEvent);
+    buttonLayout->addWidget(firstEvent);
+    buttonLayout->addWidget(lastEvent);
+    buttonLayout->addWidget(download);
+    buttonLayout->addWidget(upload);
+
+    buttonLayout->setSpacing(25);
+    buttonLayout->setContentsMargins(25,20,25,20);
+
+    mainLayout->addLayout(buttonLayout);
+}
+
+void EventViewer::addLine(){
+
+    line = new QFrame();
+    line->setFixedHeight(2);
+    line->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    line->setStyleSheet(QString("background-color: #c0c0c0;"));
+
+    lineLayout->addWidget(line);
+    lineLayout->setContentsMargins(75,10,75,0);
+    mainLayout->addLayout(lineLayout);
 }

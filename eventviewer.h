@@ -13,23 +13,28 @@
 #include<QDate>
 #include<event.h>
 #include<inputdialog.h>
+#include<QGroupBox>
+#include<QLine>
 
 class EventViewer : public QWidget
 {
     Q_OBJECT
 private:
     QVBoxLayout* mainLayout;
-    QHBoxLayout* secondLayout;
-    QVBoxLayout* thirdLayout;
-    QVBoxLayout* fourthLayout;
+    QHBoxLayout* lblCalendarLayout;
+    QHBoxLayout* buttonLayout;
+    QVBoxLayout* lineLayout;
+
     QMenuBar* menuBar;
     QCalendarWidget* calendar;
     QLabel* label;
+    QFrame* line;
 
     void addMenus();
     void addCalendar();
     void addLabel();
     void addControls();
+    void addLine();
 public:
     explicit EventViewer(QWidget *parent = nullptr);
     void showThisEvent (Event* e) const;
