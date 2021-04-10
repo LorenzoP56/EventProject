@@ -45,9 +45,11 @@ void EventViewer::showWarning(const QString & message)
 QStringList EventViewer::showAddEvent(){
 
     bool ok;
-    QStringList list = InputDialog::getStrings(this, &ok, 4);
 
-    //label->setText(list[0]+"\n"+list[1]);
+    QStringList list = InputDialog::getStrings(this, &ok,4);
+    if(ok){
+        label->setText(list[0]);
+    }
 
     return list;
 }

@@ -15,6 +15,7 @@
 #include<inputdialog.h>
 #include<QGroupBox>
 #include<QLine>
+#include<string>
 
 class EventViewer : public QWidget
 {

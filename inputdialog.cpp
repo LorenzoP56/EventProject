@@ -26,7 +26,7 @@ InputDialog::InputDialog(QWidget *parent, int t) : QDialog(parent),type(t)
 
 QStringList InputDialog::getStrings(QWidget *parent, bool *ok, int type)
 {
-    InputDialog *dialog = new InputDialog(parent,type);
+    InputDialog *dialog = new InputDialog(parent, type);
 
     QStringList list;
 
@@ -45,7 +45,6 @@ QStringList InputDialog::getStrings(QWidget *parent, bool *ok, int type)
     return list;
 }
 
-
 void InputDialog::addNewEvent(){
 
     QLabel* lblNewEvent = new QLabel("-- INFORMAZIONI GENERALI EVENTO --",this);
@@ -55,6 +54,7 @@ void InputDialog::addNewEvent(){
     eLoc = new QLineEdit(this);
     lytMain->addRow(lblLoc,eLoc);
     fields<<eLoc;
+    itemList.insert(0,eLoc->text());
 
     QLabel* lblTit = new QLabel("Titolo evento: ",this);
     eTit = new QLineEdit(this);
@@ -112,6 +112,13 @@ void InputDialog::buildTypeEvent(int type){
 void InputDialog::addFair(){
     QLabel* lblFiera = new QLabel ("-- INFORMAZIONI RELATIVE ALLA FIERA --");
     lytMain->addRow(lblFiera);
+
+    QLabel* lblTypeFair = new QLabel ("Inserisci tipo fiera",this);
+    QComboBox* comboTypeFair = new QComboBox(this);
+    comboTypeFair->addItem("Piccola");
+    comboTypeFair->addItem("Media");
+    comboTypeFair->addItem("Grande");
+    lytMain->addRow(lblTypeFair,comboTypeFair);
 
     QLabel* lblCompName = new QLabel("Nome compagnia",this);
     QLineEdit* eCompName = new QLineEdit(this);

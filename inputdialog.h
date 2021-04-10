@@ -34,7 +34,7 @@ private:
 
     QList<QLineEdit*> fields;
 
-    QList<QString*> list;
+    QList<QString> itemList;
 
     int type;
 
@@ -53,6 +53,7 @@ private:
 public:
     explicit InputDialog(QWidget *parent = nullptr, int t = 0);
     static void getEvent(QWidget* parent);
+
     static QStringList getStrings(QWidget *parent, bool *ok = nullptr,int type = 0);
 
 };
