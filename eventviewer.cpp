@@ -21,7 +21,7 @@ EventViewer::EventViewer(QWidget *parent) : QWidget(parent){
     setLayout(mainLayout);
     resize(QSize(1024, 720));
 
-    //showAddEvent();
+    showAddEvent();
     //std::cout<<showRemoveEvent().toUtf8().constData()<<std::endl;
 }
 
@@ -42,13 +42,14 @@ void EventViewer::showWarning(const QString & message)
     error->show();
 }
 
-std::pair<int, QString *> EventViewer::showAddEvent(){
+QStringList EventViewer::showAddEvent(){
 
-    /*QString a = QInputDialog::getMultiLineText(this, "Aggiungi Evento", "Titolo: ");
-    return a;//creare classe derivata da QDialog*/
     bool ok;
-    QStringList list = InputDialog::getStrings(this,&ok,1);
+    QStringList list = InputDialog::getStrings(this, &ok, 4);
+
     //label->setText(list[0]+"\n"+list[1]);
+
+    return list;
 }
 
 QString EventViewer::showRemoveEvent()

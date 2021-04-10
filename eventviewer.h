@@ -39,7 +39,7 @@ public:
     explicit EventViewer(QWidget *parent = nullptr);
     void showThisEvent (Event* e) const;
     void showWarning(const QString&);
-    std::pair<int,QString*> showAddEvent();
+    QStringList showAddEvent();
     QString showRemoveEvent();
 
 signals:

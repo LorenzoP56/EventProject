@@ -10,7 +10,10 @@
 #include <QDateEdit>
 #include <QSpinBox>
 #include <QComboBox>
-#include "event.h"
+#include <QDoubleSpinBox>
+#include <QCheckBox>
+#include <vector>
+
 
 class QLineEdit;
 class QLabel;
@@ -27,15 +30,30 @@ private:
     QLineEdit* eEmpl;
     QSpinBox* eExp;
 
+    QFormLayout *lytMain;
+
     QList<QLineEdit*> fields;
+
+    QList<QString*> list;
 
     int type;
 
+    void addNewEvent();
+    void buildTypeEvent(int type);
+    void addFair();
+    void addWedding();
+    void addBachelor();
+    void addMarriage();
+    void addTypeChurch();
+    void addSport();
+    void addMarathon();
+    void addTournament();
+    void addTypeSport();
 
 public:
     explicit InputDialog(QWidget *parent = nullptr, int t = 0);
     static void getEvent(QWidget* parent);
-    static QStringList getStrings(QWidget *parent, bool *ok = nullptr, int type = 0);
+    static QStringList getStrings(QWidget *parent, bool *ok = nullptr,int type = 0);
 
 };
 
