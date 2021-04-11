@@ -18,6 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     bachelorparty.cpp \
     commercialfair.cpp \
+    controller.cpp \
     date.cpp \
     event.cpp \
     eventcreator.cpp \
@@ -38,6 +39,7 @@ HEADERS += \
     commercialfair.h \
     company.h \
     container.h \
+    controller.h \
     date.h \
     deepptr.h \
     event.h \
