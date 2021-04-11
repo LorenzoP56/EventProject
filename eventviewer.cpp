@@ -22,12 +22,11 @@ EventViewer::EventViewer(QWidget *parent) : QWidget(parent){
     resize(QSize(1024, 720));
 
     showAddEvent();
+    //showRemoveEvent();
     //std::cout<<showRemoveEvent().toUtf8().constData()<<std::endl;
 }
 
-void EventViewer::showThisEvent(Event *e) const{
-
-}
+void EventViewer::showThisEvent(Event *e) const{}
 
 void EventViewer::showWarning(const QString & message)
 {
@@ -56,21 +55,21 @@ QStringList EventViewer::showAddEvent(){
 
 QString EventViewer::showRemoveEvent()
 {
-    QString titolo = QInputDialog::getText(this, "Rimuovi Evento", "Titolo Evento");
+    QString titolo = QInputDialog::getText(this, "Rimuovi Evento", "Titolo evento che vuoi rimuovere");
     return titolo;
 }
 
 void EventViewer::addMenus(){
     menuBar = new QMenuBar(this);
-    QMenu* file = new QMenu("File", menuBar);
-    QMenu* exit = new QMenu("Calendario", menuBar);
-    QMenu* control = new QMenu("Controlli", menuBar);
+    file = new QMenu("File", menuBar);
+    exit = new QMenu("Calendario", menuBar);
+    control = new QMenu("Controlli", menuBar);
 
     menuBar->addMenu(exit);
     menuBar->addMenu(file);
     menuBar->addMenu(control);
 
-    QMenu* inserisci = file->addMenu("Inserisci nuovo evento");
+    inserisci = file->addMenu("Inserisci nuovo evento");
     QAction* elimina = file->addAction("Elimina");
 
     QAction* actionInsertFiera = inserisci->addAction("Fiera");
@@ -87,6 +86,8 @@ void EventViewer::addMenus(){
     QAction* actionPrevious = control->addAction("Precedente");
     QAction* actionFirst = control->addAction("Primo");
     QAction* actionLast = control->addAction("Ultimo");
+
+    connect(exit->actions()[2],SIGNAL(triggered()),this,SLOT(close()));
 
 
     menuBar->setStyleSheet("background:#f3efe8; color:#383232;");
@@ -199,3 +200,7 @@ void EventViewer::addLine(){
     lineLayout->setContentsMargins(75,10,75,0);
     mainLayout->addLayout(lineLayout);
 }
+
+/*void setController(Controller* c){
+
+}*/

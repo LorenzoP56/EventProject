@@ -54,6 +54,7 @@ void InputDialog::addNewEvent(){
     eLoc = new QLineEdit(this);
     lytMain->addRow(lblLoc,eLoc);
     fields<<eLoc;
+
     itemList.insert(0,eLoc->text());
 
     QLabel* lblTit = new QLabel("Titolo evento: ",this);
