@@ -27,7 +27,7 @@ public:
     void previousEvent() const;
     void firstEvent() const;
     void lastEvent() const;
-    Event* getEvent() const;
+    Event* getEvent(u_int index) const;
     u_int getCurrent() const;
     u_int getNumOfEvent() const;
 };

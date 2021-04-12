@@ -11,28 +11,47 @@
 #include<vector>
 #include<QInputDialog>
 #include<QDate>
+#include<event.h>
+#include<inputdialog.h>
+#include<QGroupBox>
+#include<QLine>
+#include<string>
 
 class EventViewer : public QWidget
 {
     Q_OBJECT
 private:
+
+    //Controller* controller;
     QVBoxLayout* mainLayout;
-    QHBoxLayout* secondLayout;
-    QVBoxLayout* thirdLayout;
-    QVBoxLayout* fourthLayout;
+    QHBoxLayout* lblCalendarLayout;
+    QHBoxLayout* buttonLayout;
+    QVBoxLayout* lineLayout;
+
     QMenuBar* menuBar;
+    QMenu* inserisci;
+    QMenu* file;
+    QMenu* exit;
+    QMenu* control;
+
     QCalendarWidget* calendar;
     QLabel* label;
+    QFrame* line;
 
     void addMenus();
     void addCalendar();
     void addLabel();
     void addControls();
+    void addLine();
 public:
+    //void setController(Controller* c);
     explicit EventViewer(QWidget *parent = nullptr);
+    void showThisEvent (Event* e) const;
     void showWarning(const QString&);
-    QString showAddEvent();
+    QStringList showAddEvent();
     QString showRemoveEvent();
+
+
 signals:
 
 };

@@ -23,6 +23,7 @@ SOURCES += \
     event.cpp \
     eventcreator.cpp \
     eventviewer.cpp \
+    inputdialog.cpp \
     main.cpp \
     marathon.cpp \
     marriage.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     event.h \
     eventcreator.h \
     eventviewer.h \
+    inputdialog.h \
     marathon.h \
     marriage.h \
     modelevent.h \
