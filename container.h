@@ -102,24 +102,6 @@ public:
     const Type& operator [](int  index) const;
 
     int search (const Type& Value) const;
-
-    /* FUNZIONI DA IMPLEMENTARE AL BISOGNO
-
-         * @brief overloading operatore + per concatenare due vettori
-
-        Container operator+ (const Container & c) const;
-
-
-         * @brief aggiunge aggiunge tutti gli elementi di 'c' in coda al vettore
-
-        Container & operator += (const Container & c);
-
-
-         * @brief aggiunge in coda al vettore un nuovo elemento
-
-        Container & operator += (const Type & value);
-
-*/
     /**
      * @brief overloading operator =
      * @return Container
@@ -169,26 +151,6 @@ Type* Container<Type>::deepCopy(const Container &c){
     }
     return aux;
 }
-
-/* Costruttore di copia alternativo questo non utilizza l'operatore di =
- * deepCopy(c) no istruzioni aggiuntive  per aggiornare numberOfElements
- *
- * Soluzione proposta da Ranzato info = deepCopy(c) + aggiornare il campo numberOfElements manualmente
- * template<class Type>
-void Container<Type>::deepCopy(const Container &c){
-    numberOfElements = capacity = c.numberOfElements;
-    if(capacity == 0){
-        info = NULL;
-    }
-    else{
-        info = new Type* [capacity];
-    }
-    for (int i = 0; i < numberOfElements; i++){
-        info[i] = c.info[i];
-    }
-}
-*/
-
 template <class Type>
 Container<Type>::~Container(){
     if (info)

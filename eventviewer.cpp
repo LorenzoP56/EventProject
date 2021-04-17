@@ -1,5 +1,6 @@
 #include "eventviewer.h"
 #include<iostream>
+#include "controller.h"
 
 EventViewer::EventViewer(QWidget *parent) : QWidget(parent){
 
@@ -18,19 +19,15 @@ EventViewer::EventViewer(QWidget *parent) : QWidget(parent){
 
     addControls();
 
+
+
     setLayout(mainLayout);
     resize(QSize(1024, 720));
-
-    showAddEvent();
-    //showRemoveEvent();
-    //std::cout<<showRemoveEvent().toUtf8().constData()<<std::endl;
 }
 
-void EventViewer::showThisEvent(Event *e) const{}
-
-void EventViewer::showWarning(const QString & message)
+void EventViewer::showWarning(const QString & message) const
 {
-    QDialog* error = new QDialog(this);
+    QDialog* error = new QDialog();
     error->setLayout(new QHBoxLayout);
     error->layout()->addWidget(new QLabel(message, error));
     error->layout()->setAlignment(Qt::AlignCenter);
@@ -41,22 +38,65 @@ void EventViewer::showWarning(const QString & message)
     error->show();
 }
 
-QStringList EventViewer::showAddEvent(){
+void EventViewer::showEvento(Event *event)
+{
+    QString visualizza = QString::fromStdString(event->see() + "\nAl prezzo di: " +
+                                                std::to_string(event->getCosto()) + "\nCon capienza massima: " +
+                                                std::to_string(event->getMaxCap()));
+    label->setText(visualizza);
+}
 
-    bool ok;
+void EventViewer::showAddEvent(){
+    InputDialog* dialog = new InputDialog(this);
+    dialog->show();
+}
 
-    QStringList list = InputDialog::getStrings(this, &ok,4);
-    if(ok){
-        label->setText(list[0]);
-    }
+void EventViewer::showAddEventB()
+{
+    InputDialogB* dialog = new InputDialogB(this);
+    dialog->show();
+}
 
-    return list;
+void EventViewer::showAddEventMarriage()
+{
+    InputDialogMarriage* dialog = new InputDialogMarriage(this);
+    dialog->show();
+}
+
+void EventViewer::showAddEventMarathon()
+{
+    InputDialogMarathon* dialog = new InputDialogMarathon(this);
+    dialog->show();
+}
+
+void EventViewer::showAddEventTournament()
+{
+    InputDialogT* dialog = new InputDialogT(this);
+    dialog->show();
 }
 
 QString EventViewer::showRemoveEvent()
 {
     QString titolo = QInputDialog::getText(this, "Rimuovi Evento", "Titolo evento che vuoi rimuovere");
     return titolo;
+}
+
+void EventViewer::finish(std::pair<int, std::vector<QString>> aux) const
+{
+    try {
+        controller->addEvent(aux);
+        calendar->addEvent(QDate(2021, aux.second[6].toInt(), aux.second[5].toInt()));
+    } catch (RatingError* e) {
+        showWarning(e->what());
+    }
+    catch (std::logic_error* e) {
+        showWarning(e->what());
+    }
+}
+
+void EventViewer::clean()
+{
+    label->setText("");
 }
 
 void EventViewer::addMenus(){
@@ -70,25 +110,22 @@ void EventViewer::addMenus(){
     menuBar->addMenu(control);
 
     inserisci = file->addMenu("Inserisci nuovo evento");
-    QAction* elimina = file->addAction("Elimina");
+    file->addAction(new QAction("Elimina"));
 
-    QAction* actionInsertFiera = inserisci->addAction("Fiera");
-    QAction* actionInsertBachelor = inserisci->addAction("Bachelor");
-    QAction* actionInsertMarriage = inserisci->addAction("Marriage");
-    QAction* actionInserisciTournament = inserisci->addAction("Tournament");
-    QAction* actionInserisciMarathon = inserisci->addAction("Marathon");
+    inserisci->addAction(new QAction("Fiera"));
+    inserisci->addAction(new QAction("Bachelor"));
+    inserisci->addAction(new QAction("Marriage"));
+    inserisci->addAction(new QAction("Tournament"));
+    inserisci->addAction(new QAction("Marathon"));
 
-    QAction* actionExport = exit->addAction("Esporta eventi");
-    QAction* actionImport = exit->addAction("Importa eventi");
-    QAction* actionClose = exit->addAction("Termina programma");
+    exit->addAction(new QAction("Esporta eventi"));
+    exit->addAction(new QAction("Importa eventi"));
+    exit->addAction(new QAction("Termina programma"));
 
-    QAction* actionNext = control->addAction("Prossimo");
-    QAction* actionPrevious = control->addAction("Precedente");
-    QAction* actionFirst = control->addAction("Primo");
-    QAction* actionLast = control->addAction("Ultimo");
-
-    connect(exit->actions()[2],SIGNAL(triggered()),this,SLOT(close()));
-
+    control->addAction(new QAction("Prossimo"));
+    control->addAction(new QAction("Precedente"));
+    control->addAction(new QAction("Primo"));
+    control->addAction(new QAction("Ultimo"));
 
     menuBar->setStyleSheet("background:#f3efe8; color:#383232;");
 
@@ -98,18 +135,17 @@ void EventViewer::addMenus(){
 void EventViewer::addCalendar()
 {
 
-    calendar = new QCalendarWidget(this);
+    calendar = new MyCalendarWidget(this);
+
     calendar->setMinimumDate(QDate(2021, 1, 1));
     calendar->setMaximumDate(QDate(2021, 12, 31));
     calendar->setStyleSheet("background:#f3efe8; color:#383232;");
-    QTextCharFormat a = QTextCharFormat();
-    a.setFont(QFont("Comic Sans MS"), QTextCharFormat::FontPropertiesAll);
-    calendar->setDateTextFormat(QDate(2021, 2,1), a);
-    calendar->setVerticalHeaderFormat(calendar->NoVerticalHeader);
 
     lblCalendarLayout->addWidget(calendar);
 
     mainLayout->addLayout(lblCalendarLayout);
+
+
 }
 
 void EventViewer::addLabel(){
@@ -157,24 +193,22 @@ void EventViewer::addLabel(){
     label = new QLabel(this);
 
     label->setMargin(25);
-    label->setText("Evento dell'anno\nPer la compagnia Apple\ninvitati: 500\nPrezzo: 300€\nResponsabile: Nome Cognome");
     label->setStyleSheet("background:#383232; color: #f3efe8; font-size: 15px;");
 
     lblVLayout->addWidget(label,80);
 
     lblCalendarLayout->addLayout(lblVLayout);
-
 }
 
 void EventViewer::addControls()
 {
 
-    QPushButton* previuosEvent = new QPushButton("Precedente evento", this);
-    QPushButton* nextEvent = new QPushButton("Prossimo evento", this);
-    QPushButton* firstEvent = new QPushButton("Primo evento dell'anno", this);
-    QPushButton* lastEvent = new QPushButton("Ultimo evento dell'anno", this);
-    QPushButton* download = new QPushButton("Scarica calendario", this);
-    QPushButton* upload = new QPushButton("Inserisci calendario", this);
+    previuosEvent = new QPushButton("Precedente evento", this);
+    nextEvent = new QPushButton("Prossimo evento", this);
+    firstEvent = new QPushButton("Primo evento dell'anno", this);
+    lastEvent = new QPushButton("Ultimo evento dell'anno", this);
+    download = new QPushButton("Scarica calendario", this);
+    upload = new QPushButton("Inserisci calendario", this);
 
     buttonLayout->addWidget(previuosEvent);
     buttonLayout->addWidget(nextEvent);
@@ -185,6 +219,8 @@ void EventViewer::addControls()
 
     buttonLayout->setSpacing(25);
     buttonLayout->setContentsMargins(25,20,25,20);
+
+
 
     mainLayout->addLayout(buttonLayout);
 }
@@ -201,6 +237,41 @@ void EventViewer::addLine(){
     mainLayout->addLayout(lineLayout);
 }
 
-/*void setController(Controller* c){
+void EventViewer::cleanCalendar(const QDate & d) const
+{
+    calendar->cleanCalendar(d);
+}
 
-}*/
+void EventViewer::setController(Controller *c)
+{
+    controller = c;
+    connect(firstEvent, SIGNAL(clicked()), controller, SLOT(begin()));
+    connect(previuosEvent, SIGNAL(clicked()), controller, SLOT(previousEvent()));
+    connect(nextEvent, SIGNAL(clicked()), controller, SLOT(nextEvent()));
+    connect(lastEvent, SIGNAL(clicked()), controller, SLOT(last()));
+    //connect(download, SIGNAL(clicked()), controller, SLOT(begin()));
+    //connect(upload, SIGNAL(clicked()), controller, SLOT(begin()));
+
+    connect(control->actions()[0], SIGNAL(triggered()), controller, SLOT(nextEvent()));
+    connect(control->actions()[1], SIGNAL(triggered()), controller, SLOT(previousEvent()));
+    connect(control->actions()[2], SIGNAL(triggered()), controller, SLOT(begin()));
+    connect(control->actions()[3], SIGNAL(triggered()), controller, SLOT(last()));
+    //connect(download, SIGNAL(clicked()), controller, SLOT(begin()));
+    //connect(upload, SIGNAL(clicked()), controller, SLOT(begin()));
+
+    connect(inserisci->actions()[0], SIGNAL(triggered()), this,SLOT(showAddEvent()));
+    connect(inserisci->actions()[1], SIGNAL(triggered()), this,SLOT(showAddEventB()));
+    connect(inserisci->actions()[2], SIGNAL(triggered()), this,SLOT(showAddEventMarriage()));
+    connect(inserisci->actions()[3], SIGNAL(triggered()), this,SLOT(showAddEventTournament()));
+    connect(inserisci->actions()[4], SIGNAL(triggered()), this,SLOT(showAddEventMarathon()));
+    connect(file->actions()[1], SIGNAL(triggered()), controller, SLOT(removeEvent()));
+
+    connect(exit->actions()[2],SIGNAL(triggered()),this,SLOT(close()));
+    /*connect(exit->actions()[0],SIGNAL(triggered()),this,SLOT(close()));
+    connect(exit->actions()[1],SIGNAL(triggered()),this,SLOT(close()));*/
+
+    connect(calendar, SIGNAL(ShowEventAux(const QDate&)), controller, SLOT(takeEvent(const QDate&)));
+
+
+}
+

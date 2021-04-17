@@ -22,7 +22,7 @@ public:
                           u_int compNum, u_int tNumber, std::string name, typeSport tS) const;
     void addNewMarathon(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d,
                         bool pro, u_int part, std::string city, double len) const;
-    void remove(std::string titl) const;
+    std::pair<int, int> remove(std::string titl) const;
     void nextEvent() const;
     void previousEvent() const;
     void firstEvent() const;
@@ -30,6 +30,7 @@ public:
     Event* getEvent(u_int index) const;
     u_int getCurrent() const;
     u_int getNumOfEvent() const;
+    Event* getEvent(const Date&)const;
 };
 
 #endif // MODELEVENT_H

@@ -1,7 +1,7 @@
-#ifndef INPUTDIALOG_H
-#define INPUTDIALOG_H
+#ifndef INPUTDIALOGMARATHON_H
+#define INPUTDIALOGMARATHON_H
 
-#include <QDialog>
+#include<QDialog>
 #include <QLabel>
 #include <QLineEdit>
 #include <QDialogButtonBox>
@@ -13,42 +13,37 @@
 #include <QCheckBox>
 #include <vector>
 #include<utility>
+#include "eventviewer.h"
 
-
-class EventViewer;
-
-class InputDialog : public QDialog
+class InputDialogMarathon : public QDialog
 {
     Q_OBJECT
+public:
+    InputDialogMarathon(QWidget* parent = nullptr);
+    std::pair<int, std::vector<QString>> getI()const;
 private:
     QLineEdit* eLoc;
     QLineEdit* eTit;
     QLineEdit* eEmpl;
-    QSpinBox* eRating;    
+    QSpinBox* eRating;
     QSpinBox* eExp;
     QDateEdit* eDate;
 
+    QCheckBox* isPro;
+    QSpinBox* partecipants;
+    QLineEdit* city;
+    QDoubleSpinBox* len;
+
+
     QFormLayout *lytMain;
-
-    QComboBox* cType;
-    QLineEdit* cName;
-    QSpinBox* cNumWork;
-
     EventViewer* e;
 
     std::pair<int, std::vector<QString>> list;
 
 
     void addNewEvent();
-
-public:
-    explicit InputDialog(QWidget *parent = nullptr);
-
-    std::pair<int, std::vector<QString>> getI()const;
-
 public slots:
-     void getInfo();
-
+    void getInfo();
 };
 
-#endif // INPUTDIALOG_H
+#endif // INPUTDIALOGMARATHON_H

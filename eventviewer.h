@@ -16,13 +16,19 @@
 #include<QGroupBox>
 #include<QLine>
 #include<string>
+#include<QString>
+#include<inputdialogb.h>
+#include<mycalendarwidget.h>
+#include<inputdialogmarriage.h>
+#include<inputdialogmarathon.h>
+#include<inputdialogt.h>
+
+class Controller;
 
 class EventViewer : public QWidget
 {
     Q_OBJECT
 private:
-
-    //Controller* controller;
     QVBoxLayout* mainLayout;
     QHBoxLayout* lblCalendarLayout;
     QHBoxLayout* buttonLayout;
@@ -34,26 +40,45 @@ private:
     QMenu* exit;
     QMenu* control;
 
-    QCalendarWidget* calendar;
+    MyCalendarWidget* calendar;
     QLabel* label;
     QFrame* line;
+
+    Controller* controller;
+
+    QPushButton* previuosEvent;
+    QPushButton* nextEvent;
+    QPushButton* firstEvent;
+    QPushButton* lastEvent;
+    QPushButton* download;
+    QPushButton* upload;
 
     void addMenus();
     void addCalendar();
     void addLabel();
     void addControls();
     void addLine();
+
+
 public:
-    //void setController(Controller* c);
+    void setController(Controller* c);
     explicit EventViewer(QWidget *parent = nullptr);
-    void showThisEvent (Event* e) const;
-    void showWarning(const QString&);
-    QStringList showAddEvent();
+    void showWarning(const QString&) const;
+
     QString showRemoveEvent();
 
+    void showEvento(Event* event);
+    void finish(std::pair<int, std::vector<QString>>) const;
+    void clean();
 
-signals:
+    void cleanCalendar(const QDate&) const;
 
+public slots:
+    void showAddEvent();
+    void showAddEventB();
+    void showAddEventMarriage();
+    void showAddEventMarathon();
+    void showAddEventTournament();
 };
 
 #endif // EVENTVIEWER_H

@@ -9,13 +9,13 @@ ModelEvent::~ModelEvent(){
 void ModelEvent::addNewEventFair(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, Company t, std::string name, u_int numWork) const{
     EventCreator creator;
     Event* newEvent = creator.createFair(loc,titl,empl,rating,exp,d,t,name,numWork);
-    organization->addEvent(newEvent);
+    organization->addEvent(DeepPtr<Event>(newEvent));
 }
 
 void ModelEvent::addNewEventBachelor(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, bool bG, u_int gue, u_int dance) const{
     EventCreator creator;
     Event* newEvent = creator.createBachelor(loc,titl,empl,rating, exp,d,bG,gue,dance);
-    organization->addEvent(newEvent);
+    organization->addEvent(DeepPtr<Event>(newEvent));
 }
 
 void ModelEvent::addNewMarriage(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, bool bG, u_int gue, bool l, TypeChurch t, u_int fl, u_int nW) const{
@@ -36,8 +36,8 @@ void ModelEvent::addNewMarathon(std::string loc, std::string titl, std::string e
     organization->addEvent(newEvent);
 }
 
-void ModelEvent::remove(std::string titl) const{
-    organization->removeEvent(titl);
+std::pair<int, int> ModelEvent::remove(std::string titl) const{
+    return organization->removeEvent(titl);
 }
 void ModelEvent::nextEvent() const{
     organization->next();
@@ -59,6 +59,11 @@ u_int ModelEvent::getCurrent() const{
 }
 u_int ModelEvent::getNumOfEvent() const{
     return organization->getSize();
+}
+
+Event *ModelEvent::getEvent(const Date & d) const
+{
+    return organization->getEvent(d);
 }
 
 

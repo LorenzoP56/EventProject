@@ -21,7 +21,7 @@ public:
      * @brief rimozione di un evento all'interno del nostro vettore
      * @param std::string, stringa contenente il titolo univoco dell'evento
      */
-    Event* removeEvent(std::string);
+    std::pair<int, int> removeEvent(std::string);
     /**
      * @brief va avanti di un evento
      */
@@ -45,6 +45,7 @@ public:
     u_int getSize() const;
     Event* getEvent(u_int) const;
     u_int getCurrentEvent() const;
+    Event* getEvent(const Date&)const;
 };
 
 #endif // ORGANIZATION_H

@@ -1,19 +1,13 @@
 #include "controller.h"
+#include<iostream>
 
 void Controller::showEvent() const
 {
-    /*
-    try {
-        view->showEvent(model->getEvent());
-    } catch () {
-
-    }*/
+        view->showEvento(model->getEvent(model->getCurrent()));
 }
 
 Controller::Controller(QObject *parent) : QObject(parent)
-{
-
-}
+{}
 
 void Controller::setModel(ModelEvent *m)
 {
@@ -27,48 +21,102 @@ void Controller::setView(EventViewer *v)
 
 void Controller::nextEvent() const
 {
-    model->nextEvent();
-    showEvent();
+    if(model->getNumOfEvent() == 0)
+        view->showWarning("Inserire prima almeno un evento");
+    else{
+        model->nextEvent();
+        showEvent();
+    }
 }
 
 void Controller::previousEvent() const
 {
-    model->previousEvent();
-    showEvent();
+    if(model->getNumOfEvent() == 0)
+        view->showWarning("Inserire prima almeno un evento");
+    else{
+        model->previousEvent();
+        showEvent();
+    }
 }
 
-void Controller::begin() const
+void Controller::begin()
 {
-    model->firstEvent();
-    showEvent();
+    if(model->getNumOfEvent() == 0)
+        view->showWarning("Inserire prima almeno un evento");
+    else{
+        model->firstEvent();
+        showEvent();
+    }
 }
 
 void Controller::last() const
 {
-    model->lastEvent();
-    showEvent();
+    if(model->getNumOfEvent() == 0)
+        view->showWarning("Inserire prima almeno un evento");
+    else{
+        model->lastEvent();
+        showEvent();
+    }
 }
 
-void Controller::addEvent() const
+void Controller::addEvent(std::pair<int, std::vector<QString>> aux) const
 {
-    std::pair<int, QString*> add; //= view->showAddEvent();
-    switch (add.first) {
-        case 1: //model->addNewEventFair(add.second[0],...)
-        break;
-        case 2: //model->addNewEventBachelor(add.second[0],...)
-        break;
-        case 3: //model->addNewEventBachelor(add.second[0],...)
-        break;
-        case 4: //model->addNewEventBachelor(add.second[0],...)
-        break;
-        case 5: //model->addNewEventBachelor(add.second[0],...)
-        break;
+    //try {
+        switch (aux.first) {
+            case 1:
+                    model->addNewEventFair(aux.second[0].toStdString(), aux.second[1].toStdString()
+                    , aux.second[2].toStdString(), aux.second[3].toInt(), aux.second[4].toInt(),
+                    Date(aux.second[5].toInt(), aux.second[6].toInt()), aux.second[7].toStdString() == "Piccola" ? SC : aux.second[7].toStdString() == "Media" ? MC : BC ,
+                    aux.second[8].toStdString(), aux.second[9].toInt());
+            break;
+            case 2: model->addNewEventBachelor(aux.second[0].toStdString(), aux.second[1].toStdString()
+                    , aux.second[2].toStdString(), aux.second[3].toInt(), aux.second[4].toInt(),
+                    Date(aux.second[5].toInt(), aux.second[6].toInt()), aux.second[8].toStdString() == "Uomo" ? true : false,
+                    aux.second[7].toInt(), aux.second[9].toInt());
+            break;
+            case 3: model->addNewMarriage(aux.second[0].toStdString(), aux.second[1].toStdString()
+                    , aux.second[2].toStdString(), aux.second[3].toInt(), aux.second[4].toInt(),
+                    Date(aux.second[5].toInt(), aux.second[6].toInt()), aux.second[8].toStdString() == "Uomo" ? true : false,
+                    aux.second[7].toInt(), aux.second[9].toStdString() == "yes" ?  true : false ,
+                    aux.second[12].toStdString() == "Cristiana" ? cristiana : ortodossa, aux.second[10].toInt(), aux.second[11].toInt());
+            break;
+            case 4: model->addNewMarathon(aux.second[0].toStdString(), aux.second[1].toStdString()
+                    , aux.second[2].toStdString(), aux.second[3].toInt(), aux.second[4].toInt(),
+                    Date(aux.second[5].toInt(), aux.second[6].toInt()), aux.second[7].toStdString() == "yes" ?  true : false,
+                    aux.second[8].toInt(), aux.second[9].toStdString(), aux.second[10].toDouble());
+            break;
+            case 5: model->addNewTournament(aux.second[0].toStdString(), aux.second[1].toStdString()
+                    , aux.second[2].toStdString(), aux.second[3].toInt(), aux.second[4].toInt(),
+                    Date(aux.second[5].toInt(), aux.second[6].toInt()), aux.second[7].toStdString() == "yes" ?  true : false,
+                    aux.second[10].toInt(), aux.second[11].toInt(), aux.second[9].toStdString(),
+                    aux.second[8].toStdString() == "basket" ? basket : football);
+            break;
+        }
+    /*} catch (RatingError* e) {
+        view->showWarning(e->what());
     }
+    catch (std::logic_error* e) {
+        view->showWarning(e->what());
+        view->cleanCalendar(QDate(2021, aux.second[6].toInt(), aux.second[5].toInt()));
+    }*/
 }
 
 void Controller::removeEvent() const
 {
-    QString title = view->showRemoveEvent();
-    model->remove(title.toStdString());
+    try {
+        QString title = view->showRemoveEvent();
+        std::pair<int, int> aux = model->remove(title.toStdString());
+        view->cleanCalendar(QDate(2021, aux.second, aux.first));  //QUA E' IL PROBLEMA
+        view->clean();
+    } catch (std::logic_error* e) {
+        view->showWarning(e->what());
+    }
+}
+
+void Controller::takeEvent(const QDate & d)
+{
+    Event* aux = model->getEvent(Date(d.day(), d.month()));
+    if(aux)
+        view->showEvento(aux);
 }
 

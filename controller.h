@@ -1,10 +1,11 @@
 #ifndef CONTROLLER_H
 #define CONTROLLER_H
 
-#include <QObject>
-#include<eventviewer.h>
-#include<modelevent.h>
+#include<QObject>
+#include "eventviewer.h"
+#include "modelevent.h"
 #include<utility>
+#include<vector>
 
 class Controller : public QObject
 {
@@ -12,6 +13,9 @@ class Controller : public QObject
 private:
     EventViewer* view;
     ModelEvent* model;
+    /**
+     * @brief metodo che richiama la vista per mostrare un determinato Evento
+     */
     void showEvent() const;
 public:
     explicit Controller(QObject *parent = nullptr);
@@ -21,11 +25,13 @@ public:
 public slots:
     void nextEvent() const;
     void previousEvent() const;
-    void begin() const;
+    void begin();
     void last() const;
 
-    void addEvent() const;
+    void addEvent(std::pair<int, std::vector<QString>>) const;
     void removeEvent() const;
+
+    void takeEvent(const QDate&);
 
 };
 
