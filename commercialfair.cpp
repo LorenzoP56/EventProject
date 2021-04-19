@@ -39,6 +39,32 @@ bool CommercialFair::operator==(const CommercialFair & c) const
             c.type == type && c.companyName == companyName && c.numWorkers == numWorkers;
 }
 
+void CommercialFair::read (const QJsonObject &json){
+    /*
+    Company type;
+    std::string companyName;
+    u_int numWorkers;
+    static double costByWorkerBig;
+    static double costByWorkerSM;
+    */
+    if(json.contains("type")){
+        type = Company(json["type"].toInt());
+    }
+
+    if(json.contains("companyName")){
+        companyName = json["companyName"].toString().toStdString();
+    }
+
+    if(json.contains("numWorkers")){
+        numWorkers = json["numWorkers"].toInt();
+    }
+}
+
+void CommercialFair::write(QJsonObject &json) const{
+    json["type"] = type;
+    json["companyName"] = QString::fromStdString(companyName);
+    json["numWorkers"] = (int) numWorkers;
+}
 
 double CommercialFair::costByWorkerBig = 5.80;
 double CommercialFair::costByWorkerSM = 3.90;

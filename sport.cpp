@@ -11,4 +11,14 @@ double Sport::getSecurityPolicyCost() const {
     return securityPolicyCost;
 }
 
+void Sport::read(const QJsonObject &json){
+    if(json.contains("isPro")){
+        isPro = json["isPro"].toBool();
+    }
+}
+
+void Sport::write(QJsonObject &json) const{
+    json["isPro"] = isPro;
+}
+
 double Sport::securityPolicyCost = 1250;

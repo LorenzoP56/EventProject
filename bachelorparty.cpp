@@ -39,5 +39,15 @@ bool BachelorParty::operator==(const BachelorParty & b) const
     return Event::operator==(b) && b.dancers == dancers;
 }
 
+void BachelorParty::read(const QJsonObject &json){
+    if(json.contains("dancers")){
+        dancers = json["dancers"].toInt();
+    }
+}
+
+void BachelorParty::write(QJsonObject &json) const{
+    json["dancers"] = (int) dancers;
+}
+
 double BachelorParty::priceForDancer = 20.50;
 double BachelorParty::priceForGuest = 9.90;

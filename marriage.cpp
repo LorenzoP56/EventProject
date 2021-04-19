@@ -66,6 +66,32 @@ bool Marriage::operator==(const Marriage & c) const
             c.numFlower == numFlower && c.numWaiters == numWaiters;
 }
 
+void Marriage::read(const QJsonObject &json){
+
+    if(json.contains("lunch")){
+        lunch = json["lunch"].toBool();
+    }
+
+    if(json.contains("church")){
+        church = TypeChurch(json["church"].toInt());
+    }
+
+    if(json.contains("numFlower")){
+        numFlower = json["numFlower"].toInt();
+    }
+
+    if(json.contains("numWaiters")){
+        numWaiters = json["numWaiters"].toInt();
+    }
+}
+
+void Marriage::write(QJsonObject &json) const{
+    json["lunch"] = lunch;
+    json["church"] = church;
+    json["numFlower"] = (int) numFlower;
+    json["numWaiters"] = (int) numWaiters;
+}
+
 double Marriage::flowerPrice = 4.95;
 double Marriage::bandPrice = 890;
 double Marriage::waitersPrice = 24.90;

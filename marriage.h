@@ -57,6 +57,16 @@ public:
      * @return true se sono uguali
      */
     bool operator==(const Marriage&) const;
+
+    /**
+     * @brief ovveride funzione virtuale di event per leggere i dati di una marriage
+     */
+    void read (const QJsonObject &json);
+
+    /**
+     * @brief ovveride funzione virtuale di event per scrivere i dati di una marriage
+     */
+    void write (QJsonObject &json) const;
 };
 
 #endif // MARRIAGE_H

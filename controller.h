@@ -4,8 +4,10 @@
 #include<QObject>
 #include "eventviewer.h"
 #include "modelevent.h"
-#include<utility>
-#include<vector>
+#include <utility>
+#include <vector>
+#include <QJsonObject>
+#include <deepptr.h>
 
 class Controller : public QObject
 {

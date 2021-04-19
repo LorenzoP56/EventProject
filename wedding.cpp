@@ -8,3 +8,19 @@ Wedding::Wedding(std::string loc, std::string titl, std::string empl, u_int rati
 bool Wedding::getBossGender() const {return isMale;}
 
 u_int Wedding::getGuest() const {return guest;}
+
+void Wedding::read(const QJsonObject &json){
+
+    if(json.contains("isMale")){
+            isMale = json["isMale"].toBool();
+    }
+
+    if(json.contains("guest")){
+        guest = json["guest"].toInt();
+    }
+}
+
+void Wedding::write(QJsonObject &json) const{
+    json["isMale"] = isMale;
+    json["guest"] = (int) guest;
+}

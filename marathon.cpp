@@ -43,5 +43,26 @@ bool Marathon::operator==(const Marathon & m) const
     return Event::operator==(m) && m.partecipants == partecipants && m.town == town && m.length == length;
 }
 
+void Marathon::read(const QJsonObject &json){
+
+    if(json.contains("partecipants")){
+        partecipants = json["partecipants"].toInt();
+    }
+
+    if(json.contains("town")){
+        town = json["town"].toString().toStdString();
+    }
+
+    if(json.contains("length")){
+        length = json["length"].toDouble();
+    }
+}
+
+void Marathon::write(QJsonObject &json) const{
+    json["partecipants"] = (int) partecipants;
+    json["town"] = QString::fromStdString (town);
+    json["length"] = length;
+}
+
 double Marathon::subPrice = 5.90;
 

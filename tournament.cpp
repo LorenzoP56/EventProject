@@ -51,4 +51,36 @@ bool Tournament::operator==(const Tournament & t) const
             && t.organizationTeam == organizationTeam && t.tSport == tSport;
 }
 
+void Tournament::read(const QJsonObject &json)
+{
+    /*
+    u_int componentsNumber;
+    u_int teamNumber;
+    std::string organizationTeam;
+    typeSport tSport;*/
+
+    if(json.contains("componentsNumber")){
+        componentsNumber = json["componentsNumber"].toInt();
+    }
+
+    if(json.contains("teamNumber")){
+        teamNumber = json["teamNumber"].toInt();
+    }
+
+    if(json.contains("organizationTeam")){
+        organizationTeam = json["organizationTeam"].toString().toStdString();
+    }
+
+    if(json.contains("tSport")){
+        tSport = typeSport(json["tSport"].toInt());
+    }
+}
+
+void Tournament::write(QJsonObject &json) const{
+    json["componentsNumber"] = (int) componentsNumber;
+    json["teamNumber"] = (int) teamNumber;
+    json["organizationTeam"] = QString::fromStdString(organizationTeam);
+    json["tSport"] = tSport;
+}
+
 double Tournament::teamSubPrice = 125;

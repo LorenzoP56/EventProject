@@ -3,6 +3,7 @@
 #include<string>
 #include<date.h>
 #include<ratingerror.h>
+#include <QJsonObject>
 
 class Event
 {
@@ -98,6 +99,16 @@ public:
      * @return true se sono uguali
      */
     virtual bool operator==(const Event&) const;
+
+    /**
+     * @brief funzione virtuale per la lettura di un file json degli eventi
+     */
+    virtual void read (const QJsonObject &json);
+
+    /**
+     * @brief funzione virtuale per la scrittura in un file json degli eventi
+     */
+    virtual void write (QJsonObject &json) const;
 };
 
 #endif // EVENT_H

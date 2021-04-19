@@ -62,6 +62,16 @@ public:
      * @return true se sono uguali
      */
     bool operator==(const Marathon&) const;
+
+    /**
+     * @brief ovveride funzione virtuale di event per leggere i dati di evento sportivo
+     */
+    void read (const QJsonObject &json);
+
+    /**
+     * @brief ovveride funzione virtuale di event per scrivere i dati di un evento sportivo
+     */
+    void write (QJsonObject &json) const;
 };
 
 #endif // MARATHON_H
