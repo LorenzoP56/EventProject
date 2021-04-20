@@ -24,3 +24,4 @@ void Wedding::write(QJsonObject &json) const{
     json["isMale"] = isMale;
     json["guest"] = (int) guest;
 }
+

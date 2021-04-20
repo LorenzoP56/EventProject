@@ -5,6 +5,10 @@
 #include<container.h>
 #include<event.h>
 #include<vector>
+#include<QJsonArray>
+
+
+
 class Organization
 {
 private:
@@ -46,6 +50,8 @@ public:
     Event* getEvent(u_int) const;
     u_int getCurrentEvent() const;
     Event* getEvent(const Date&)const;
+
+    void write(QJsonObject &json) const;
 };
 
 #endif // ORGANIZATION_H

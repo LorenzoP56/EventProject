@@ -44,6 +44,16 @@ public:
      * @return true se sono uguali
      */
     bool operator==(const CommercialFair&) const;
+
+    /**
+     * @brief ovveride funzione virtuale di event per leggere i dati di una fiera
+     */
+    void read (const QJsonObject &json);
+
+    /**
+     * @brief ovveride funzione virtuale di event per scrivere i dati di una fiera
+     */
+    void write (QJsonObject &json) const;
 };
 
 #endif // COMMERCIALFAIR_H

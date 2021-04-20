@@ -90,4 +90,15 @@ Event *Organization::getEvent(const Date & d) const
     return nullptr;
 }
 
+void Organization::write(QJsonObject &json) const{
+
+    QJsonArray eventJSON;
+    for(auto it = Eventi.begin(); it != Eventi.end(); it++){
+        QJsonObject jsonObj;
+        (*it)->write(jsonObj);
+        eventJSON.append(jsonObj);
+    }
+    json["eventi"] = eventJSON;
+}
+
 

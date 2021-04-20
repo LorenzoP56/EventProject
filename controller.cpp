@@ -3,7 +3,7 @@
 
 void Controller::showEvent() const
 {
-        view->showEvento(model->getEvent(model->getCurrent()));
+    view->showEvento(model->getEvent(model->getCurrent()));
 }
 
 Controller::Controller(QObject *parent) : QObject(parent)
@@ -120,3 +120,18 @@ void Controller::takeEvent(const QDate & d)
         view->showEvento(aux);
 }
 
+void Controller::download() const{
+
+    QFile saveFile(QStringLiteral("save.json"));
+
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+        view->showWarning("IMPOSSIBILE SALVARE IL FILE");
+    }
+
+    QJsonObject eventObject;
+    model->write(eventObject);
+
+    QJsonDocument saveDoc(eventObject);
+    saveFile.write(saveDoc.toJson());
+
+  }

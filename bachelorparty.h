@@ -50,6 +50,16 @@ public:
      * @return true se sono uguali
      */
     bool operator==(const BachelorParty&) const;
+
+    /**
+     * @brief ovveride funzione virtuale di event per leggere i dati di una bachelor
+     */
+    void read (const QJsonObject &json);
+
+    /**
+     * @brief ovveride funzione virtuale di event per scrivere i dati di una bachelor
+     */
+    void write (QJsonObject &json) const;
 };
 
 #endif // BACHELORPARTY_H

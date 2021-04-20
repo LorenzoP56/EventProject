@@ -1,6 +1,6 @@
 #include "mycalendarwidget.h"
 
-MyCalendarWidget::MyCalendarWidget(QWidget *parent): QCalendarWidget(parent)
+MyCalendarWidget::MyCalendarWidget(QWidget *parent): QCalendarWidget(parent),e(dynamic_cast<EventViewer*>(parent))
 {
     QObject::connect(this, SIGNAL(clicked(const QDate&)), this, SLOT(showMyEvent(const QDate&)));
 }
@@ -44,6 +44,7 @@ bool MyCalendarWidget::isIn(const QDate & d)
 void MyCalendarWidget::showMyEvent(const QDate & d)
 {
     data = d;
+    e->updateLabel();
     if(isIn(data))
         emit ShowEventAux(data);//lancio segnale
 }

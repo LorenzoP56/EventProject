@@ -64,12 +64,12 @@ public:
     bool operator==(const Marathon&) const;
 
     /**
-     * @brief ovveride funzione virtuale di event per leggere i dati di evento sportivo
+     * @brief ovveride funzione virtuale di event per leggere i dati di una maratona
      */
     void read (const QJsonObject &json);
 
     /**
-     * @brief ovveride funzione virtuale di event per scrivere i dati di un evento sportivo
+     * @brief ovveride funzione virtuale di event per scrivere i dati di una maratona
      */
     void write (QJsonObject &json) const;
 };
