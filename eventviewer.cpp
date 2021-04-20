@@ -245,7 +245,6 @@ void EventViewer::updateLabel()
     lblDay->setText(QString::number(calendar->selectedDate().day()));
     lblMounth->setText(calendar->selectedDate().longMonthName(calendar->selectedDate().month()));
     lblWeekDay->setText(calendar->selectedDate().longDayName(calendar->selectedDate().dayOfWeek()));
-
 }
 
 void EventViewer::setController(Controller *c)

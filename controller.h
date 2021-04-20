@@ -13,6 +13,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QMessageBox>
+#include <QDir>
 
 class Controller : public QObject
 {

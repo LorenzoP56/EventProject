@@ -46,6 +46,17 @@ void BachelorParty::read(const QJsonObject &json){
 }
 
 void BachelorParty::write(QJsonObject &json) const{
+
+    json["location"] = QString::fromStdString(getLocation());
+    json["title"] = QString::fromStdString(getTitle());
+    json["employee"] = QString::fromStdString(getEmployee());
+
+    json["ratingStars"] = (int) getRating(); //non so se è corretto fare una conversione di questo genere da controllare
+    json["experienceEmployee"] = (int) getExperience();
+
+    json["day"] = (int) getDate().getDay();
+    json["month"] = (int) getDate().getMonth();
+    json["year"] = (int) getDate().getYear();
     json["dancers"] = (int) dancers;
 }
 

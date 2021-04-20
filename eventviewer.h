@@ -78,7 +78,7 @@ public:
 
     void cleanCalendar(const QDate&) const;
 
-    void updateLabel ();
+    void updateLabel();
 
 public slots:
     void showAddEvent();

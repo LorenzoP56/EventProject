@@ -3,6 +3,7 @@
 
 void Controller::showEvent() const
 {
+    view->updateLabel();
     view->showEvento(model->getEvent(model->getCurrent()));
 }
 
@@ -122,7 +123,9 @@ void Controller::takeEvent(const QDate & d)
 
 void Controller::download() const{
 
-    QFile saveFile(QStringLiteral("save.json"));
+    //QString path = QDir::currentPath();
+
+    QFile saveFile(QStringLiteral("/Users/matteopillon/Documents/Programmazione Oggetti/eventi.json"));
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
         view->showWarning("IMPOSSIBILE SALVARE IL FILE");
