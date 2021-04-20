@@ -59,6 +59,18 @@ void Marathon::read(const QJsonObject &json){
 }
 
 void Marathon::write(QJsonObject &json) const{
+    json["location"] = QString::fromStdString(getLocation());
+    json["title"] = QString::fromStdString(getTitle());
+    json["employee"] = QString::fromStdString(getEmployee());
+
+    json["ratingStars"] = (int) getRating(); //non so se è corretto fare una conversione di questo genere da controllare
+    json["experienceEmployee"] = (int) getExperience();
+
+    json["day"] = (int) getDate().getDay();
+    json["month"] = (int) getDate().getMonth();
+    json["year"] = (int) getDate().getYear();
+
+    json["isPro"] = getPro();
     json["partecipants"] = (int) partecipants;
     json["town"] = QString::fromStdString (town);
     json["length"] = length;

@@ -57,6 +57,10 @@ void BachelorParty::write(QJsonObject &json) const{
     json["day"] = (int) getDate().getDay();
     json["month"] = (int) getDate().getMonth();
     json["year"] = (int) getDate().getYear();
+
+    json["isMale"] = getBossGender();
+    json["guest"] = (int) getGuest();
+
     json["dancers"] = (int) dancers;
 }
 

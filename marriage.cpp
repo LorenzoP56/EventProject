@@ -86,6 +86,20 @@ void Marriage::read(const QJsonObject &json){
 }
 
 void Marriage::write(QJsonObject &json) const{
+    json["location"] = QString::fromStdString(getLocation());
+    json["title"] = QString::fromStdString(getTitle());
+    json["employee"] = QString::fromStdString(getEmployee());
+
+    json["ratingStars"] = (int) getRating(); //non so se è corretto fare una conversione di questo genere da controllare
+    json["experienceEmployee"] = (int) getExperience();
+
+    json["day"] = (int) getDate().getDay();
+    json["month"] = (int) getDate().getMonth();
+    json["year"] = (int) getDate().getYear();
+
+    json["isMale"] = getBossGender();
+    json["guest"] = (int) getGuest();
+
     json["lunch"] = lunch;
     json["church"] = church;
     json["numFlower"] = (int) numFlower;

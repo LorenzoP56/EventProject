@@ -40,13 +40,7 @@ bool CommercialFair::operator==(const CommercialFair & c) const
 }
 
 void CommercialFair::read (const QJsonObject &json){
-    /*
-    Company type;
-    std::string companyName;
-    u_int numWorkers;
-    static double costByWorkerBig;
-    static double costByWorkerSM;
-    */
+
     if(json.contains("type")){
         type = Company(json["type"].toInt());
     }
@@ -61,6 +55,17 @@ void CommercialFair::read (const QJsonObject &json){
 }
 
 void CommercialFair::write(QJsonObject &json) const{
+    json["location"] = QString::fromStdString(getLocation());
+    json["title"] = QString::fromStdString(getTitle());
+    json["employee"] = QString::fromStdString(getEmployee());
+
+    json["ratingStars"] = (int) getRating(); //non so se è corretto fare una conversione di questo genere da controllare
+    json["experienceEmployee"] = (int) getExperience();
+
+    json["day"] = (int) getDate().getDay();
+    json["month"] = (int) getDate().getMonth();
+    json["year"] = (int) getDate().getYear();
+
     json["type"] = type;
     json["companyName"] = QString::fromStdString(companyName);
     json["numWorkers"] = (int) numWorkers;
