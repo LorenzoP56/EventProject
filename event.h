@@ -22,7 +22,10 @@ public:
     virtual double getCosto() const = 0;
     virtual u_int getMaxCap() const = 0;
     virtual std::string see() const = 0;
+
+    Event();
     Event(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d);
+
     virtual ~Event() = default;
     /**
      * @brief getter nome location dell'evento

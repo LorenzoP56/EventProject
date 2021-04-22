@@ -247,6 +247,10 @@ void EventViewer::updateLabel()
     lblWeekDay->setText(calendar->selectedDate().longDayName(calendar->selectedDate().dayOfWeek()));
 }
 
+void EventViewer::updateCalendar(const QDate &d) const{
+    calendar->addEvent(d);
+}
+
 void EventViewer::setController(Controller *c)
 {
     controller = c;
@@ -255,7 +259,7 @@ void EventViewer::setController(Controller *c)
     connect(nextEvent, SIGNAL(clicked()), controller, SLOT(nextEvent()));
     connect(lastEvent, SIGNAL(clicked()), controller, SLOT(last()));
     connect(download, SIGNAL(clicked()), controller, SLOT(download()));
-    //connect(upload, SIGNAL(clicked()), controller, SLOT(begin()));
+    connect(upload, SIGNAL(clicked()), controller, SLOT(upload()));
 
     connect(control->actions()[0], SIGNAL(triggered()), controller, SLOT(nextEvent()));
     connect(control->actions()[1], SIGNAL(triggered()), controller, SLOT(previousEvent()));
@@ -273,7 +277,7 @@ void EventViewer::setController(Controller *c)
     connect(exit->actions()[2],SIGNAL(triggered()),this,SLOT(close()));
 
     connect(exit->actions()[0],SIGNAL(triggered()),controller,SLOT(download()));
-    /*connect(exit->actions()[1],SIGNAL(triggered()),this,SLOT(close()));*/
+    connect(exit->actions()[1],SIGNAL(triggered()),controller,SLOT(upload()));
 
     connect(calendar, SIGNAL(ShowEventAux(const QDate&)), controller, SLOT(takeEvent(const QDate&)));
 

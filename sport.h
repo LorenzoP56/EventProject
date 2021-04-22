@@ -9,6 +9,7 @@ private:
     bool isPro;
     static double securityPolicyCost;
 public:
+    Sport();
     Sport(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, bool pro);
 
     bool getPro() const;

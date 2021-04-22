@@ -123,8 +123,6 @@ void Controller::takeEvent(const QDate & d)
 
 void Controller::download() const{
 
-    //QString path = QDir::currentPath();
-
     QFile saveFile(QStringLiteral("/Users/matteopillon/Documents/Programmazione Oggetti/eventi.json"));
 
     if (!saveFile.open(QIODevice::WriteOnly)) {
@@ -137,4 +135,34 @@ void Controller::download() const{
     QJsonDocument saveDoc(eventObject);
     saveFile.write(saveDoc.toJson());
 
-  }
+}
+
+void Controller::upload(){
+
+    QFile loadFile(QStringLiteral("/Users/matteopillon/Documents/Programmazione Oggetti/eventi.json"));
+
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+        qWarning("File Json non presente");
+    }
+
+    QByteArray saveData = loadFile.readAll();
+
+    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+
+    QJsonObject jsonFile = loadDoc.object();
+
+    if(jsonFile.empty()){
+        view->showWarning("ERRORE DURANTE L'UPLOAD: file json vuoto");
+    }
+    else {
+        model->read(jsonFile);
+        for (unsigned int i = 0; i<model->getNumOfEvent(); ++i){
+
+            view->updateCalendar(QDate(
+                                     model->getEvent(i)->getDate().getYear(),
+                                     model->getEvent(i)->getDate().getMonth(),
+                                     model->getEvent(i)->getDate().getDay()
+                                     ));
+        }
+    }
+}

@@ -34,6 +34,9 @@ public:
     Event* getEvent(const Date&)const;
 
     void write(QJsonObject &json) const;
+
+    void read (QJsonObject jsonFile);
+
 };
 
 #endif // MODELEVENT_H

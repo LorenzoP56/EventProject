@@ -14,6 +14,7 @@ private:
     static double subPrice;
 
 public:
+    Marathon();
     Marathon(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, bool pro, u_int part, std::string city, double len);
 
     /**

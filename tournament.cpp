@@ -1,5 +1,7 @@
 #include "tournament.h"
 
+Tournament::Tournament():Sport(){}
+
 Tournament::Tournament(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, bool pro, u_int compNum, u_int tNumber, std::string name, typeSport tS):
                        Sport(loc, titl,empl,rating,exp,d,pro), componentsNumber(compNum), teamNumber(tNumber), organizationTeam(name), tSport(tS)
 {}
@@ -53,11 +55,33 @@ bool Tournament::operator==(const Tournament & t) const
 
 void Tournament::read(const QJsonObject &json)
 {
-    /*
-    u_int componentsNumber;
-    u_int teamNumber;
-    std::string organizationTeam;
-    typeSport tSport;*/
+    if(json.contains("location")){
+        this->setLocation(json["location"].toString().toStdString());
+    }
+
+    if(json.contains("title")){
+        this->setTitle(json["title"].toString().toStdString());
+    }
+
+    if(json.contains("employee")){
+        this->setEmployee(json["employee"].toString().toStdString());
+    }
+
+    if(json.contains("ratingStars")){
+        this->setRating(json["ratingStars"].toInt());
+    }
+
+    if(json.contains("experienceEmployee")){
+        this->setExp(json["experienceEmployee"].toInt());
+    }
+
+    if(json.contains("day") && json.contains("month") && json.contains("year")){
+        Date d;
+        d.setDay(json["day"].toInt());
+        d.setMonth(json["month"].toInt());
+        d.setYear(json["year"].toInt());
+        this->setDate(d);
+    }
 
     if(json.contains("componentsNumber")){
         componentsNumber = json["componentsNumber"].toInt();

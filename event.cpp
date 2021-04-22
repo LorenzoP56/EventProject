@@ -1,5 +1,7 @@
 #include "event.h"
 
+Event::Event(){}
+
 Event::Event(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d): location(isEmpty(loc) ? "milano": loc),
     title(isEmpty(titl)? "evento generico" : titl), employee(isEmpty(empl) ? "Lorenzo Pillon" : empl),
     ratingStars(rating > 5? 5 : rating), experienceEmployee(exp > 5? 5 : exp), date(d)

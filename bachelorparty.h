@@ -12,6 +12,7 @@ private:
     static double priceForGuest;
 
 public:
+    BachelorParty();
     BachelorParty(std::string loc, std::string titl, std::string empl,
                   u_int rating, u_int exp, Date d, bool bG, u_int gue, u_int dance);
 

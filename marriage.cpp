@@ -1,4 +1,5 @@
 #include "marriage.h"
+Marriage::Marriage():Wedding(){}
 
 Marriage::Marriage(std::string loc, std::string titl, std::string empl,
                    u_int rating, u_int exp, Date d,bool bG, u_int gue, bool l, TypeChurch t, u_int fl, u_int nW):
@@ -67,6 +68,42 @@ bool Marriage::operator==(const Marriage & c) const
 }
 
 void Marriage::read(const QJsonObject &json){
+
+    if(json.contains("location")){
+        this->setLocation(json["location"].toString().toStdString());
+    }
+
+    if(json.contains("title")){
+        this->setTitle(json["title"].toString().toStdString());
+    }
+
+    if(json.contains("employee")){
+        this->setEmployee(json["employee"].toString().toStdString());
+    }
+
+    if(json.contains("ratingStars")){
+        this->setRating(json["ratingStars"].toInt());
+    }
+
+    if(json.contains("experienceEmployee")){
+        this->setExp(json["experienceEmployee"].toInt());
+    }
+
+    if(json.contains("day") && json.contains("month") && json.contains("year")){
+        Date d;
+        d.setDay(json["day"].toInt());
+        d.setMonth(json["month"].toInt());
+        d.setYear(json["year"].toInt());
+        this->setDate(d);
+    }
+
+    if(json.contains("isMale")){
+        setBossGender(json["isMale"].toBool());
+    }
+
+    if(json.contains("guest")){
+        setGuest(json["guest"].toInt());
+    }
 
     if(json.contains("lunch")){
         lunch = json["lunch"].toBool();

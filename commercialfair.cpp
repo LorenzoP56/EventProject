@@ -1,5 +1,7 @@
 #include "commercialfair.h"
 
+CommercialFair::CommercialFair():Event(){}
+
 CommercialFair::CommercialFair(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, Company t, std::string name, u_int numWork):
     Event(loc, titl, empl, rating, exp, d),
     type(t), companyName(name), numWorkers(numWork)
@@ -40,6 +42,34 @@ bool CommercialFair::operator==(const CommercialFair & c) const
 }
 
 void CommercialFair::read (const QJsonObject &json){
+
+    if(json.contains("location")){
+        this->setLocation(json["location"].toString().toStdString());
+    }
+
+    if(json.contains("title")){
+        this->setTitle(json["title"].toString().toStdString());
+    }
+
+    if(json.contains("employee")){
+        this->setEmployee(json["employee"].toString().toStdString());
+    }
+
+    if(json.contains("ratingStars")){
+        this->setRating(json["ratingStars"].toInt());
+    }
+
+    if(json.contains("experienceEmployee")){
+        this->setExp(json["experienceEmployee"].toInt());
+    }
+
+    if(json.contains("day") && json.contains("month") && json.contains("year")){
+        Date d;
+        d.setDay(json["day"].toInt());
+        d.setMonth(json["month"].toInt());
+        d.setYear(json["year"].toInt());
+        this->setDate(d);
+    }
 
     if(json.contains("type")){
         type = Company(json["type"].toInt());

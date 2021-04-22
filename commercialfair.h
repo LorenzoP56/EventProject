@@ -13,6 +13,7 @@ private:
     static double costByWorkerBig;
     static double costByWorkerSM;
 public:
+    CommercialFair();
     CommercialFair(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, Company t, std::string name, u_int numWork);
     /**
      * @brief funzione polimorfa getter costo intero relativo all'evento da richiedere a committente

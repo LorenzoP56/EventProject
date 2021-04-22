@@ -80,6 +80,8 @@ public:
 
     void updateLabel();
 
+    void updateCalendar (const QDate&) const;
+
 public slots:
     void showAddEvent();
     void showAddEventB();

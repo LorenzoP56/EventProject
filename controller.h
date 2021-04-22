@@ -45,6 +45,8 @@ public slots:
 
     void download () const;
 
+    void upload ();
+
 };
 
 #endif // CONTROLLER_H

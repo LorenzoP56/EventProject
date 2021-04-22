@@ -9,10 +9,13 @@ private:
     bool isMale;
     u_int guest;
 public:
+    Wedding();
     Wedding(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, bool bG, u_int gue);
     u_int getGuest() const;
     bool getBossGender() const;
 
+    void setBossGender(bool g);
+    void setGuest(u_int g);
     /**
      * @brief ovveride funzione virtuale di event per leggere i dati di un wedding
      */
