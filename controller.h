@@ -14,6 +14,7 @@
 #include <QJsonDocument>
 #include <QMessageBox>
 #include <QDir>
+#include <QCoreApplication>
 
 class Controller : public QObject
 {

@@ -41,6 +41,7 @@ void EventViewer::showEvento(Event *event)
     QString visualizza = QString::fromStdString(event->see() + "\nAl prezzo di: " +
                                                 std::to_string(event->getCosto()) + "\nCon capienza massima: " +
                                                 std::to_string(event->getMaxCap()));
+    updateLabel();
     label->setText(visualizza);
 }
 
@@ -194,7 +195,6 @@ void EventViewer::addLabel(){
 
     label->setMargin(25);
     label->setStyleSheet("background:#383232; color: #f3efe8; font-size: 15px;");
-
     lblVLayout->addWidget(label,80);
 
     lblCalendarLayout->addLayout(lblVLayout);
@@ -208,7 +208,7 @@ void EventViewer::addControls()
     firstEvent = new QPushButton("Primo evento dell'anno", this);
     lastEvent = new QPushButton("Ultimo evento dell'anno", this);
     download = new QPushButton("Scarica calendario", this);
-    upload = new QPushButton("Inserisci calendario", this);
+    upload = new QPushButton("Importa calendario", this);
 
     buttonLayout->addWidget(previuosEvent);
     buttonLayout->addWidget(nextEvent);

@@ -22,7 +22,7 @@ std::string CommercialFair::see() const
 {
     return getTitle() + "\nSi terra' a " + getLocation() + ", in data " +
             getDate().toString() + " con responsabile organizzazione: " + getEmployee()
-            + "\nDa parte della compagnia " + getCompany();
+            + "\nDa parte della compagnia: " + getCompany();
 }
 
 std::string CommercialFair::getCompany() const
