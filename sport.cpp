@@ -9,6 +9,9 @@ bool Sport::getPro() const {
     return isPro;
 }
 
+void Sport::setPro (bool pro){
+    isPro = pro;
+}
 double Sport::getSecurityPolicyCost() const {
     return securityPolicyCost;
 }

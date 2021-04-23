@@ -74,6 +74,10 @@ void Marathon::read(const QJsonObject &json){
         this->setDate(d);
     }
 
+    if(json.contains("isPro")){
+        setPro(json["isPro"].toBool());
+    }
+
     if(json.contains("partecipants")){
         partecipants = json["partecipants"].toInt();
     }

@@ -47,5 +47,6 @@ void MyCalendarWidget::showMyEvent(const QDate & d)
     e->updateLabel();
     if(isIn(data))
         emit ShowEventAux(data);//lancio segnale
+    else e->clean();
 }
 

@@ -83,6 +83,10 @@ void Tournament::read(const QJsonObject &json)
         this->setDate(d);
     }
 
+    if(json.contains("isPro")){
+        setPro(json["isPro"].toBool());
+    }
+
     if(json.contains("componentsNumber")){
         componentsNumber = json["componentsNumber"].toInt();
     }

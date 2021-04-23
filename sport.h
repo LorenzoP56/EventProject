@@ -14,6 +14,7 @@ public:
 
     bool getPro() const;
     double getSecurityPolicyCost() const;
+    void setPro (bool pro);
 
     /**
      * @brief ovveride funzione virtuale di event per leggere i dati di evento sportivo
