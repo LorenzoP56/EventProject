@@ -6,10 +6,12 @@ Organization::Organization(): Eventi(), currentEvent(0) {}
 void Organization::addEvent(DeepPtr<Event> evento)
 {
     bool flag = false;
-    for (std::vector<DeepPtr<Event>>::iterator i = Eventi.begin(); i!=Eventi.end(); ++i)
+    for (std::vector<DeepPtr<Event>>::iterator i = Eventi.begin(); i!=Eventi.end(); ++i){
         if((*i)->getTitle() == evento->getTitle())
             throw new std::logic_error("evento già inserito");
-    //Eventi.push_back(evento);
+        if((*i)->getDate() == evento->getDate())
+            throw new std::logic_error("evento deve essere univoco, nella data ne è già presente un altro");
+    }
     for (std::vector<DeepPtr<Event>>::iterator i = Eventi.begin(); i!=Eventi.end() && !flag; ++i)
         if((*i)->getDate() > evento->getDate()){
             Eventi.insert(i, evento);
@@ -20,16 +22,18 @@ void Organization::addEvent(DeepPtr<Event> evento)
         Eventi.push_back(evento);
 }
 
-Event* Organization::removeEvent(std::string title)
+std::pair<int, int> Organization::removeEvent(std::string title)
 {
     bool flag  = false;
-    Event* aux;
-    for (std::vector<DeepPtr<Event>>::iterator i = Eventi.begin(); i!=Eventi.end() && !flag; ++i)
+    std::pair<int, int> aux;
+    for (std::vector<DeepPtr<Event>>::iterator i = Eventi.begin(); i!=Eventi.end() && !flag; i++){
         if ((*i)->getTitle() == title){
-            aux = (*i).getPunt();
+            aux.first = (*i)->getDate().getDay();
+            aux.second = (*i)->getDate().getMonth();
             Eventi.erase(i);
             flag = true;
         }
+    }
     if(!flag)
         throw new std::logic_error("Evento non presente nella raccolta");
     else
@@ -76,6 +80,14 @@ Event *Organization::getEvent(u_int i) const
 u_int Organization::getCurrentEvent() const
 {
     return currentEvent;
+}
+
+Event *Organization::getEvent(const Date & d) const
+{
+    for(auto it = Eventi.begin(); it != Eventi.end(); it++)
+        if((*it)->getDate() == d)
+            return (*it).getPunt();
+    return nullptr;
 }
 
 

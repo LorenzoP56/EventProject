@@ -18,14 +18,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     bachelorparty.cpp \
     commercialfair.cpp \
+    controller.cpp \
     date.cpp \
     event.cpp \
     eventcreator.cpp \
     eventviewer.cpp \
+    inputdialog.cpp \
+    inputdialogb.cpp \
+    inputdialogmarathon.cpp \
+    inputdialogmarriage.cpp \
+    inputdialogt.cpp \
     main.cpp \
     marathon.cpp \
     marriage.cpp \
     modelevent.cpp \
+    mycalendarwidget.cpp \
     organization.cpp \
     ratingerror.cpp \
     sport.cpp \
@@ -33,6 +40,7 @@ SOURCES += \
     wedding.cpp
 
 HEADERS += \
+    controller.h \
     TypeChurch.h \
     bachelorparty.h \
     commercialfair.h \
@@ -43,9 +51,15 @@ HEADERS += \
     event.h \
     eventcreator.h \
     eventviewer.h \
+    inputdialog.h \
+    inputdialogb.h \
+    inputdialogmarathon.h \
+    inputdialogmarriage.h \
+    inputdialogt.h \
     marathon.h \
     marriage.h \
     modelevent.h \
+    mycalendarwidget.h \
     organization.h \
     ratingerror.h \
     sport.h \
@@ -57,3 +71,6 @@ HEADERS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Resources.qrc
