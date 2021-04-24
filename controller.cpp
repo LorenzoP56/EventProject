@@ -129,7 +129,12 @@ void Controller::download() const{
 
     else{
 
-        QFile saveFile(QStringLiteral("/Users/matteopillon/Documents/Programmazione Oggetti/eventi.json"));
+        QString fileName = QFileDialog::getExistingDirectory(view, tr("Open Directory"),
+                                                             "/home",
+                                                             QFileDialog::ShowDirsOnly
+                                                             | QFileDialog::DontResolveSymlinks);
+        fileName.append("/eventi.json");
+        QFile saveFile(fileName);
 
         if (!saveFile.open(QIODevice::WriteOnly)) {
             view->showWarning("IMPOSSIBILE SALVARE IL FILE");
@@ -155,10 +160,13 @@ void Controller::upload(){
         /*QString name = QDir::currentPath();
         name.append("/eventi.json");*/
         //"/Users/matteopillon/Documents/Programmazione Oggetti/eventi.json"
-        QFile loadFile("/Users/matteopillon/Documents/Programmazione Oggetti/eventi.json");
+
+        QString fileName = QFileDialog::getOpenFileName(view,tr("File json da importare"),"",tr("Eventi (*.json)"));
+
+        QFile loadFile(fileName);
 
         if (!loadFile.open(QIODevice::ReadOnly)) {
-            qWarning("File Json non presente");
+            qWarning("Errore durante l'importazione del file");
         }
 
         QByteArray saveData = loadFile.readAll();

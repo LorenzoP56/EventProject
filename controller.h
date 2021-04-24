@@ -15,6 +15,7 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QCoreApplication>
+#include <QFileDialog>
 
 class Controller : public QObject
 {
