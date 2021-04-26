@@ -66,7 +66,10 @@ Event *ModelEvent::getEvent(const Date & d) const
     return organization->getEvent(d);
 }
 
+void ModelEvent::write(QJsonObject &json) const{
+    organization->write(json);
+}
 
-
-
-
+void ModelEvent::read(QJsonObject jsonFile){
+    organization->read(jsonFile);
+}

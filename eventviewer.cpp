@@ -19,8 +19,6 @@ EventViewer::EventViewer(QWidget *parent) : QWidget(parent){
 
     addControls();
 
-
-
     setLayout(mainLayout);
     resize(QSize(1024, 720));
 }
@@ -43,6 +41,7 @@ void EventViewer::showEvento(Event *event)
     QString visualizza = QString::fromStdString(event->see() + "\nAl prezzo di: " +
                                                 std::to_string(event->getCosto()) + "\nCon capienza massima: " +
                                                 std::to_string(event->getMaxCap()));
+    updateLabel();
     label->setText(visualizza);
 }
 
@@ -143,6 +142,8 @@ void EventViewer::addCalendar()
 
     lblCalendarLayout->addWidget(calendar);
 
+    updateLabel();
+
     mainLayout->addLayout(lblCalendarLayout);
 
 
@@ -158,22 +159,22 @@ void EventViewer::addLabel(){
 
     QFont font;
 
-    QLabel* lblDay = new QLabel(this);
-    lblDay->setText("1");
+    lblDay = new QLabel(this);
+    //lblDay->setText("1");
     font = lblDay->font();
-    font.setPointSize(72);
+    font.setPointSize(64);
     font.setBold(true);
     lblDay->setContentsMargins(25,0,0,0);
     lblDay->setFont (font);
 
-    QLabel* lblMounth = new QLabel(this);
-    lblMounth->setText("APRILE 2021");
+    lblMounth = new QLabel(this);
+    //lblMounth->setText("APRILE 2021");
     font = lblMounth->font();
-    font.setPointSize(24);
+    font.setPointSize(32);
     lblMounth->setFont(font);
 
-    QLabel* lblWeekDay = new QLabel(this);
-    lblWeekDay->setText("GIOVEDI'");
+    lblWeekDay = new QLabel(this);
+    //lblWeekDay->setText("GIOVEDI'");
     font = lblMounth->font();
     font.setPointSize(32);
     lblWeekDay->setFont(font);
@@ -194,7 +195,6 @@ void EventViewer::addLabel(){
 
     label->setMargin(25);
     label->setStyleSheet("background:#383232; color: #f3efe8; font-size: 15px;");
-
     lblVLayout->addWidget(label,80);
 
     lblCalendarLayout->addLayout(lblVLayout);
@@ -208,7 +208,7 @@ void EventViewer::addControls()
     firstEvent = new QPushButton("Primo evento dell'anno", this);
     lastEvent = new QPushButton("Ultimo evento dell'anno", this);
     download = new QPushButton("Scarica calendario", this);
-    upload = new QPushButton("Inserisci calendario", this);
+    upload = new QPushButton("Importa calendario", this);
 
     buttonLayout->addWidget(previuosEvent);
     buttonLayout->addWidget(nextEvent);
@@ -219,8 +219,6 @@ void EventViewer::addControls()
 
     buttonLayout->setSpacing(25);
     buttonLayout->setContentsMargins(25,20,25,20);
-
-
 
     mainLayout->addLayout(buttonLayout);
 }
@@ -242,6 +240,17 @@ void EventViewer::cleanCalendar(const QDate & d) const
     calendar->cleanCalendar(d);
 }
 
+void EventViewer::updateLabel()
+{
+    lblDay->setText(QString::number(calendar->selectedDate().day()));
+    lblMounth->setText(calendar->selectedDate().longMonthName(calendar->selectedDate().month()));
+    lblWeekDay->setText(calendar->selectedDate().longDayName(calendar->selectedDate().dayOfWeek()));
+}
+
+void EventViewer::updateCalendar(const QDate &d) const{
+    calendar->addEvent(d);
+}
+
 void EventViewer::setController(Controller *c)
 {
     controller = c;
@@ -249,14 +258,13 @@ void EventViewer::setController(Controller *c)
     connect(previuosEvent, SIGNAL(clicked()), controller, SLOT(previousEvent()));
     connect(nextEvent, SIGNAL(clicked()), controller, SLOT(nextEvent()));
     connect(lastEvent, SIGNAL(clicked()), controller, SLOT(last()));
-    //connect(download, SIGNAL(clicked()), controller, SLOT(begin()));
-    //connect(upload, SIGNAL(clicked()), controller, SLOT(begin()));
+    connect(download, SIGNAL(clicked()), controller, SLOT(download()));
+    connect(upload, SIGNAL(clicked()), controller, SLOT(upload()));
 
     connect(control->actions()[0], SIGNAL(triggered()), controller, SLOT(nextEvent()));
     connect(control->actions()[1], SIGNAL(triggered()), controller, SLOT(previousEvent()));
     connect(control->actions()[2], SIGNAL(triggered()), controller, SLOT(begin()));
     connect(control->actions()[3], SIGNAL(triggered()), controller, SLOT(last()));
-    //connect(download, SIGNAL(clicked()), controller, SLOT(begin()));
     //connect(upload, SIGNAL(clicked()), controller, SLOT(begin()));
 
     connect(inserisci->actions()[0], SIGNAL(triggered()), this,SLOT(showAddEvent()));
@@ -267,8 +275,9 @@ void EventViewer::setController(Controller *c)
     connect(file->actions()[1], SIGNAL(triggered()), controller, SLOT(removeEvent()));
 
     connect(exit->actions()[2],SIGNAL(triggered()),this,SLOT(close()));
-    /*connect(exit->actions()[0],SIGNAL(triggered()),this,SLOT(close()));
-    connect(exit->actions()[1],SIGNAL(triggered()),this,SLOT(close()));*/
+
+    connect(exit->actions()[0],SIGNAL(triggered()),controller,SLOT(download()));
+    connect(exit->actions()[1],SIGNAL(triggered()),controller,SLOT(upload()));
 
     connect(calendar, SIGNAL(ShowEventAux(const QDate&)), controller, SLOT(takeEvent(const QDate&)));
 

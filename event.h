@@ -3,6 +3,7 @@
 #include<string>
 #include<date.h>
 #include<ratingerror.h>
+#include <QJsonObject>
 
 class Event
 {
@@ -21,7 +22,10 @@ public:
     virtual double getCosto() const = 0;
     virtual u_int getMaxCap() const = 0;
     virtual std::string see() const = 0;
+
+    Event();
     Event(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d);
+
     virtual ~Event() = default;
     /**
      * @brief getter nome location dell'evento
@@ -98,6 +102,16 @@ public:
      * @return true se sono uguali
      */
     virtual bool operator==(const Event&) const;
+
+    /**
+     * @brief funzione virtuale per la lettura di un file json degli eventi
+     */
+    virtual void read (const QJsonObject &json);
+
+    /**
+     * @brief funzione virtuale per la scrittura in un file json degli eventi
+     */
+    virtual void write (QJsonObject &json) const;
 };
 
 #endif // EVENT_H

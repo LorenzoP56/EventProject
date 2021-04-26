@@ -24,6 +24,7 @@
 #include<inputdialogt.h>
 
 class Controller;
+class MyCalendarWidget;
 
 class EventViewer : public QWidget
 {
@@ -53,6 +54,10 @@ private:
     QPushButton* download;
     QPushButton* upload;
 
+    QLabel* lblDay;
+    QLabel* lblMounth;
+    QLabel* lblWeekDay;
+
     void addMenus();
     void addCalendar();
     void addLabel();
@@ -72,6 +77,10 @@ public:
     void clean();
 
     void cleanCalendar(const QDate&) const;
+
+    void updateLabel();
+
+    void updateCalendar (const QDate&) const;
 
 public slots:
     void showAddEvent();

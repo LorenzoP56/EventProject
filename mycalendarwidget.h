@@ -4,7 +4,7 @@
 #include<QCalendarWidget>
 #include<QPainter>
 #include<QRect>
-
+#include<eventviewer.h>
 
 class MyCalendarWidget : public QCalendarWidget
 {
@@ -19,6 +19,8 @@ private:
     QList<QDate> myDates;
     bool isIn(const QDate&);
     QDate data;
+
+    EventViewer* e;
 public slots:
     void showMyEvent(const QDate&);
 signals:

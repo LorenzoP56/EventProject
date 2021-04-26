@@ -1,5 +1,7 @@
 #include "bachelorparty.h"
 
+BachelorParty::BachelorParty() : Wedding(){}
+
 BachelorParty::BachelorParty(std::string loc, std::string titl, std::string empl,
     u_int rating, u_int exp, Date d, bool bG, u_int gue, u_int dance):
     Wedding(loc,titl,empl,rating,exp,d,bG,gue),dancers(dance)
@@ -37,6 +39,67 @@ BachelorParty *BachelorParty::clone() const
 bool BachelorParty::operator==(const BachelorParty & b) const
 {
     return Event::operator==(b) && b.dancers == dancers;
+}
+
+void BachelorParty::read(const QJsonObject &json){
+    if(json.contains("location")){
+        this->setLocation(json["location"].toString().toStdString());
+    }
+
+    if(json.contains("title")){
+        this->setTitle(json["title"].toString().toStdString());
+    }
+
+    if(json.contains("employee")){
+        this->setEmployee(json["employee"].toString().toStdString());
+    }
+
+    if(json.contains("ratingStars")){
+        this->setRating(json["ratingStars"].toInt());
+    }
+
+    if(json.contains("experienceEmployee")){
+        this->setExp(json["experienceEmployee"].toInt());
+    }
+
+    if(json.contains("day") && json.contains("month") && json.contains("year")){
+        Date d;
+        d.setDay(json["day"].toInt());
+        d.setMonth(json["month"].toInt());
+        d.setYear(json["year"].toInt());
+        this->setDate(d);
+    }
+
+    if(json.contains("isMale")){
+        setBossGender(json["isMale"].toBool());
+    }
+
+    if(json.contains("guest")){
+        setGuest(json["guest"].toInt());
+    }
+
+    if(json.contains("dancers")){
+        this->dancers = json["dancers"].toInt();
+    }
+}
+
+void BachelorParty::write(QJsonObject &json) const{
+
+    json["location"] = QString::fromStdString(getLocation());
+    json["title"] = QString::fromStdString(getTitle());
+    json["employee"] = QString::fromStdString(getEmployee());
+
+    json["ratingStars"] = (int) getRating(); //non so se è corretto fare una conversione di questo genere da controllare
+    json["experienceEmployee"] = (int) getExperience();
+
+    json["day"] = (int) getDate().getDay();
+    json["month"] = (int) getDate().getMonth();
+    json["year"] = (int) getDate().getYear();
+
+    json["isMale"] = getBossGender();
+    json["guest"] = (int) getGuest();
+
+    json["dancers"] = (int) dancers;
 }
 
 double BachelorParty::priceForDancer = 20.50;

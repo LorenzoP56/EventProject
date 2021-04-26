@@ -3,7 +3,8 @@
 
 void Controller::showEvent() const
 {
-        view->showEvento(model->getEvent(model->getCurrent()));
+    view->updateLabel();
+    view->showEvento(model->getEvent(model->getCurrent()));
 }
 
 Controller::Controller(QObject *parent) : QObject(parent)
@@ -120,3 +121,77 @@ void Controller::takeEvent(const QDate & d)
         view->showEvento(aux);
 }
 
+void Controller::download() const{
+
+    if(model->getNumOfEvent() == 0){
+        view->showWarning("Devi prima inserire almeno un evento");
+    }
+
+    else{
+
+        QString fileName = QFileDialog::getExistingDirectory(view, tr("Open Directory"),
+                                                             "/home",
+                                                             QFileDialog::ShowDirsOnly
+                                                             | QFileDialog::DontResolveSymlinks);
+        fileName.append("/eventi.json");
+        QFile saveFile(fileName);
+
+        if (!saveFile.open(QIODevice::WriteOnly)) {
+            view->showWarning("IMPOSSIBILE SALVARE IL FILE");
+        }
+
+        QJsonObject eventObject;
+        model->write(eventObject);
+
+        QJsonDocument saveDoc(eventObject);
+        saveFile.write(saveDoc.toJson());
+
+        view->showWarning("Download eventi calendario avvenuto con successo");
+    }
+}
+
+void Controller::upload(){
+
+    if(model->getNumOfEvent() != 0){
+        view->showWarning("Ci sono eventi già salvati nel tuo calendario \nCancellali e riprova");
+    }
+
+    else{
+        /*QString name = QDir::currentPath();
+        name.append("/eventi.json");*/
+        //"/Users/matteopillon/Documents/Programmazione Oggetti/eventi.json"
+
+        QString fileName = QFileDialog::getOpenFileName(view,tr("File json da importare"),"",tr("Eventi (*.json)"));
+
+        QFile loadFile(fileName);
+
+        if (!loadFile.open(QIODevice::ReadOnly)) {
+            qWarning("Errore durante l'importazione del file");
+        }
+
+        QByteArray saveData = loadFile.readAll();
+
+        QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+
+        QJsonObject jsonFile = loadDoc.object();
+
+        if(jsonFile.empty()){
+            view->showWarning("ERRORE DURANTE L'UPLOAD: file json vuoto");
+        }
+
+        else {
+            model->read(jsonFile);
+            for (unsigned int i = 0; i<model->getNumOfEvent(); ++i){
+
+                view->updateCalendar(QDate(
+                                         model->getEvent(i)->getDate().getYear(),
+                                         model->getEvent(i)->getDate().getMonth(),
+                                         model->getEvent(i)->getDate().getDay()
+                                         ));
+            }
+
+            if(model->getNumOfEvent() != 0)
+                view->showWarning("Importazione eventi avvenuta con successo");
+        }
+    }
+}

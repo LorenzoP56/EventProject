@@ -1,5 +1,7 @@
 #include "event.h"
 
+Event::Event(){}
+
 Event::Event(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d): location(isEmpty(loc) ? "milano": loc),
     title(isEmpty(titl)? "evento generico" : titl), employee(isEmpty(empl) ? "Lorenzo Pillon" : empl),
     ratingStars(rating > 5? 5 : rating), experienceEmployee(exp > 5? 5 : exp), date(d)
@@ -100,4 +102,54 @@ void Event::checkExp() const
         throw new RatingError(getEmployee(), getRating() - getExperience());
 }
 
+
+void Event::read(const QJsonObject &json){
+
+    if(json.contains("location")){
+        location = json["location"].toString().toStdString();
+    }
+
+    if(json.contains("title")){
+        title = json["title"].toString().toStdString();
+    }
+
+    if(json.contains("employee")){
+        employee = json["employee"].toString().toStdString();
+    }
+
+    if(json.contains("ratingStars")){
+        ratingStars = json["ratingStars"].toInt();
+    }
+
+    if(json.contains("experienceEmployee")){
+        experienceEmployee = json["experienceEmployee"].toInt();
+    }
+
+    if(json.contains("day")){
+        date.setDay(json["day"].toInt());
+    }
+
+    if(json.contains("month")){
+        date.setMonth(json["month"].toInt());
+    }
+
+    if(json.contains("year")){
+        date.setYear(json["year"].toInt());
+    }
+}
+
+
+void Event::write(QJsonObject &json) const{
+
+    json["location"] = QString::fromStdString(location);
+    json["title"] = QString::fromStdString(title);
+    json["employee"] = QString::fromStdString(employee);
+
+    json["ratingStars"] = (int) ratingStars; //non so se è corretto fare una conversione di questo genere da controllare
+    json["experienceEmployee"] = (int) experienceEmployee;
+
+    json["day"] = (int) date.getDay();
+    json["month"] = (int) date.getMonth();
+    json["year"] = (int) date.getYear();
+}
 

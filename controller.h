@@ -4,8 +4,18 @@
 #include<QObject>
 #include "eventviewer.h"
 #include "modelevent.h"
-#include<utility>
-#include<vector>
+#include <utility>
+#include <vector>
+#include <QJsonObject>
+#include <deepptr.h>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QFile>
+#include <QJsonDocument>
+#include <QMessageBox>
+#include <QDir>
+#include <QCoreApplication>
+#include <QFileDialog>
 
 class Controller : public QObject
 {
@@ -17,6 +27,8 @@ private:
      * @brief metodo che richiama la vista per mostrare un determinato Evento
      */
     void showEvent() const;
+
+    void saveEventToFile (QJsonObject event) const;
 public:
     explicit Controller(QObject *parent = nullptr);
 
@@ -32,6 +44,10 @@ public slots:
     void removeEvent() const;
 
     void takeEvent(const QDate&);
+
+    void download () const;
+
+    void upload ();
 
 };
 

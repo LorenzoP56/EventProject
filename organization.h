@@ -5,6 +5,13 @@
 #include<container.h>
 #include<event.h>
 #include<vector>
+#include<QJsonArray>
+#include<bachelorparty.h>
+#include<commercialfair.h>
+#include<marriage.h>
+#include<marathon.h>
+#include<tournament.h>
+
 class Organization
 {
 private:
@@ -46,6 +53,10 @@ public:
     Event* getEvent(u_int) const;
     u_int getCurrentEvent() const;
     Event* getEvent(const Date&)const;
+
+    void write(QJsonObject &json) const;
+
+    void read (QJsonObject jsonFile);
 };
 
 #endif // ORGANIZATION_H

@@ -18,6 +18,7 @@ private:
     static double priceForGuest;
 
 public:
+    Marriage();
     Marriage(std::string loc, std::string titl, std::string empl,
                        u_int rating, u_int exp, Date d, bool bG, u_int gue, bool l, TypeChurch t, u_int fl, u_int nW);
 
@@ -57,6 +58,16 @@ public:
      * @return true se sono uguali
      */
     bool operator==(const Marriage&) const;
+
+    /**
+     * @brief ovveride funzione virtuale di event per leggere i dati di una marriage
+     */
+    void read (const QJsonObject &json);
+
+    /**
+     * @brief ovveride funzione virtuale di event per scrivere i dati di una marriage
+     */
+    void write (QJsonObject &json) const;
 };
 
 #endif // MARRIAGE_H

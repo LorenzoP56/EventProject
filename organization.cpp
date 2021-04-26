@@ -90,4 +90,54 @@ Event *Organization::getEvent(const Date & d) const
     return nullptr;
 }
 
+void Organization::write(QJsonObject &json) const{
+
+    QJsonArray eventJSON;
+    for(auto it = Eventi.begin(); it != Eventi.end(); it++){
+        QJsonObject jsonObj;
+        (*it)->write(jsonObj);
+        jsonObj["type"] = typeid((*it).operator*()).name();
+        eventJSON.append(jsonObj);
+    }
+    json["eventi"] = eventJSON;
+}
+
+void Organization::read(QJsonObject jsonFile){
+
+    Eventi.clear();
+
+    QJsonArray items = jsonFile["eventi"].toArray();
+        foreach(QJsonValue item, items){
+            QJsonObject obj = item.toObject();
+            Event *p = nullptr;
+
+            if (obj["type"].toString() == typeid(CommercialFair).name()) {
+                p = new CommercialFair();
+                p->read(obj);
+            }
+
+            else if (obj["type"].toString() == typeid(BachelorParty).name()) {
+                p = new BachelorParty();
+                p->read(obj);
+            }
+
+            else if (obj["type"].toString() == typeid(Marriage).name()) {
+                p = new Marriage();
+                p->read(obj);
+            }
+
+            else if (obj["type"].toString() == typeid(Marathon).name()) {
+                p = new Marathon();
+                p->read(obj);
+            }
+
+            else if (obj["type"].toString() == typeid(Tournament).name()) {
+                p = new Tournament();
+                p->read(obj);
+            }
+
+            addEvent(DeepPtr<Event>(p));
+        }
+}
+
 

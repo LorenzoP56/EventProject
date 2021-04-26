@@ -14,6 +14,7 @@ private:
     static double subPrice;
 
 public:
+    Marathon();
     Marathon(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, bool pro, u_int part, std::string city, double len);
 
     /**
@@ -62,6 +63,16 @@ public:
      * @return true se sono uguali
      */
     bool operator==(const Marathon&) const;
+
+    /**
+     * @brief ovveride funzione virtuale di event per leggere i dati di una maratona
+     */
+    void read (const QJsonObject &json);
+
+    /**
+     * @brief ovveride funzione virtuale di event per scrivere i dati di una maratona
+     */
+    void write (QJsonObject &json) const;
 };
 
 #endif // MARATHON_H

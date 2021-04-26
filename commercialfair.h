@@ -13,6 +13,7 @@ private:
     static double costByWorkerBig;
     static double costByWorkerSM;
 public:
+    CommercialFair();
     CommercialFair(std::string loc, std::string titl, std::string empl, u_int rating, u_int exp, Date d, Company t, std::string name, u_int numWork);
     /**
      * @brief funzione polimorfa getter costo intero relativo all'evento da richiedere a committente
@@ -44,6 +45,16 @@ public:
      * @return true se sono uguali
      */
     bool operator==(const CommercialFair&) const;
+
+    /**
+     * @brief ovveride funzione virtuale di event per leggere i dati di una fiera
+     */
+    void read (const QJsonObject &json);
+
+    /**
+     * @brief ovveride funzione virtuale di event per scrivere i dati di una fiera
+     */
+    void write (QJsonObject &json) const;
 };
 
 #endif // COMMERCIALFAIR_H
