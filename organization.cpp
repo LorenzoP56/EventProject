@@ -95,7 +95,6 @@ void Organization::write(QJsonObject &json) const{
     QJsonArray eventJSON;
     for(auto it = Eventi.begin(); it != Eventi.end(); it++){
         QJsonObject jsonObj;
-
         (*it)->write(jsonObj);
         jsonObj["type"] = typeid((*it).operator*()).name();
         eventJSON.append(jsonObj);
