@@ -36,6 +36,19 @@ void EventViewer::showWarning(const QString & message) const
     error->show();
 }
 
+void EventViewer::showWell(const QString & message) const
+{
+    QDialog* well = new QDialog();
+    well->setLayout(new QHBoxLayout);
+    well->layout()->addWidget(new QLabel(message, well));
+    well->layout()->setAlignment(Qt::AlignCenter);
+    well->setMinimumWidth(120);
+    well->setMaximumWidth(450);
+    well->setStyleSheet("color:green");
+
+    well->show();
+}
+
 void EventViewer::showEvento(Event *event)
 {
     QString visualizza = QString::fromStdString(event->see() + "\nAl prezzo di: " +

@@ -129,9 +129,10 @@ public:
            bool operator != (const Iterator& i) const;
        };
 
-       Iterator begin ();
-       Iterator end ();
+       Iterator begin () const;
+       Iterator end () const;
        void erase (Iterator position);
+       void insert (Iterator index, Type value);
 };
 
 template <class Type>
@@ -305,12 +306,12 @@ bool Container<Type>::operator ==(const Container &c) const{
 }
 
 template<class Type>
-typename Container<Type>::Iterator Container<Type>::begin(){
+typename Container<Type>::Iterator Container<Type>::begin() const{
     return Iterator(info);
 }
 
 template<class Type>
-typename Container<Type>::Iterator Container<Type>::end(){
+typename Container<Type>::Iterator Container<Type>::end() const{
     return Iterator(info+numberOfElements);
 }
 
@@ -371,4 +372,15 @@ void Container<Type>::erase(Container::Iterator position){
     }
     remove(aux);
 }
+template<class Type>
+void Container<Type>::insert (Iterator index, Type value){
+    int aux = 0;
+    Iterator p = begin();
+    while(p != index){
+        p++;
+        aux++;
+    }
+    insert(aux, value);
+}
+
 #endif

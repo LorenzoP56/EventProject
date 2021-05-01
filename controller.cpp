@@ -62,7 +62,6 @@ void Controller::last() const
 
 void Controller::addEvent(std::pair<int, std::vector<QString>> aux) const
 {
-    //try {
         switch (aux.first) {
             case 1:
                     model->addNewEventFair(aux.second[0].toStdString(), aux.second[1].toStdString()
@@ -93,13 +92,6 @@ void Controller::addEvent(std::pair<int, std::vector<QString>> aux) const
                     aux.second[8].toStdString() == "basket" ? basket : football);
             break;
         }
-    /*} catch (RatingError* e) {
-        view->showWarning(e->what());
-    }
-    catch (std::logic_error* e) {
-        view->showWarning(e->what());
-        view->cleanCalendar(QDate(2021, aux.second[6].toInt(), aux.second[5].toInt()));
-    }*/
 }
 
 void Controller::removeEvent() const
@@ -146,7 +138,7 @@ void Controller::download() const{
         QJsonDocument saveDoc(eventObject);
         saveFile.write(saveDoc.toJson());
 
-        view->showWarning("Download eventi calendario avvenuto con successo");
+        view->showWell("Download eventi calendario avvenuto con successo");
     }
 }
 
@@ -191,7 +183,7 @@ void Controller::upload(){
             }
 
             if(model->getNumOfEvent() != 0)
-                view->showWarning("Importazione eventi avvenuta con successo");
+                view->showWell("Importazione eventi avvenuta con successo");
         }
     }
 }

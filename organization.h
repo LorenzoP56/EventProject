@@ -15,7 +15,8 @@
 class Organization
 {
 private:
-    std::vector<DeepPtr<Event>> Eventi;
+    //std::vector<DeepPtr<Event>> Eventi;
+    Container<DeepPtr<Event>> Eventi;
     u_int currentEvent;
 public:
     Organization();

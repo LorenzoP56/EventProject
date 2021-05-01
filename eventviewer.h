@@ -69,6 +69,7 @@ public:
     void setController(Controller* c);
     explicit EventViewer(QWidget *parent = nullptr);
     void showWarning(const QString&) const;
+    void showWell(const QString&) const;
 
     QString showRemoveEvent();
 
