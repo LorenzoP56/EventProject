@@ -183,7 +183,7 @@ bool Container<Type>::isEmpty() const{
 
 template <class Type>
 void Container<Type>::clear(){
-    for(int i = 0; i<=numberOfElements; i++){
+    for(int i = 0; i<=numberOfElements && numberOfElements!=0; i++){
         remove(i);
     }
 }
