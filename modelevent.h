@@ -33,6 +33,8 @@ public:
     u_int getNumOfEvent() const;
     Event* getEvent(const Date&)const;
 
+    void removeAllEvent();
+
     void write(QJsonObject &json) const;
 
     void read (QJsonObject jsonFile);

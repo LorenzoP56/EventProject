@@ -106,6 +106,16 @@ void Controller::removeEvent() const
     }
 }
 
+void Controller::removeAllEvent()
+{
+    try {
+        model->removeAllEvent();
+        view->cleanAllEvent();
+    }  catch (std::logic_error* e) {
+        view->showWarning(e->what());
+    }
+}
+
 void Controller::takeEvent(const QDate & d)
 {
     Event* aux = model->getEvent(Date(d.day(), d.month()));

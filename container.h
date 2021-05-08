@@ -183,9 +183,8 @@ bool Container<Type>::isEmpty() const{
 
 template <class Type>
 void Container<Type>::clear(){
-    for(int i = 0; i<=numberOfElements && numberOfElements!=0; i++){
-        remove(i);
-    }
+    numberOfElements = 0;
+    delete [] info;
 }
 
 template <class Type>
@@ -222,6 +221,7 @@ void Container<Type>::insert(int index, Type value){
 
 template<class Type>
 void Container<Type>::remove(int index){
+
     if(index < 0 || index > numberOfElements){
         throw std::out_of_range("Container::remove(int index), index is out of range)");
     }

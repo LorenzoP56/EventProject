@@ -43,6 +43,8 @@ public slots:
     void addEvent(std::pair<int, std::vector<QString>>) const;
     void removeEvent() const;
 
+    void removeAllEvent();
+
     void takeEvent(const QDate&);
 
     void download () const;

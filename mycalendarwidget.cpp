@@ -22,6 +22,10 @@ void MyCalendarWidget::cleanCalendar(const QDate & d)
     updateCells();
 }
 
+void MyCalendarWidget::cleanAllEvent(){
+    myDates.clear();
+    updateCells();
+}
 void MyCalendarWidget::paintCell(QPainter *painter, const QRect &rect, const QDate &date) const
 {
     if(myDates.contains(date)){

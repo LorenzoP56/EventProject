@@ -111,6 +111,12 @@ void EventViewer::clean()
     label->setText("");
 }
 
+void EventViewer::cleanAllEvent()
+{
+    clean();
+    calendar->cleanAllEvent();
+}
+
 void EventViewer::addMenus(){
     menuBar = new QMenuBar(this);
     file = new QMenu("File", menuBar);
@@ -122,7 +128,8 @@ void EventViewer::addMenus(){
     menuBar->addMenu(control);
 
     inserisci = file->addMenu("Inserisci nuovo evento");
-    file->addAction(new QAction("Elimina"));
+    file->addAction(new QAction("Elimina un evento"));
+    file->addAction(new QAction("Elimina tutti gli eventi"));
 
     inserisci->addAction(new QAction("Fiera"));
     inserisci->addAction(new QAction("Bachelor"));
@@ -285,7 +292,9 @@ void EventViewer::setController(Controller *c)
     connect(inserisci->actions()[2], SIGNAL(triggered()), this,SLOT(showAddEventMarriage()));
     connect(inserisci->actions()[3], SIGNAL(triggered()), this,SLOT(showAddEventTournament()));
     connect(inserisci->actions()[4], SIGNAL(triggered()), this,SLOT(showAddEventMarathon()));
+
     connect(file->actions()[1], SIGNAL(triggered()), controller, SLOT(removeEvent()));
+    connect(file->actions()[2], SIGNAL(triggered()), controller, SLOT(removeAllEvent()));
 
     connect(exit->actions()[2],SIGNAL(triggered()),this,SLOT(close()));
 

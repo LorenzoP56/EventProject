@@ -13,6 +13,7 @@ public:
     MyCalendarWidget(QWidget *parent=Q_NULLPTR);
     void addEvent(const QDate&);
     void cleanCalendar(const QDate&);
+    void cleanAllEvent();
 protected:
     void paintCell(QPainter *painter, const QRect &rect, const QDate &date) const;
 private:

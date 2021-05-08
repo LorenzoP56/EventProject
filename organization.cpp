@@ -90,6 +90,11 @@ Event *Organization::getEvent(const Date & d) const
     return nullptr;
 }
 
+void Organization::removeAllEvent()
+{
+    Eventi.clear();
+}
+
 void Organization::write(QJsonObject &json) const{
 
     QJsonArray eventJSON;

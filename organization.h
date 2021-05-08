@@ -55,6 +55,8 @@ public:
     u_int getCurrentEvent() const;
     Event* getEvent(const Date&)const;
 
+    void removeAllEvent();
+
     void write(QJsonObject &json) const;
 
     void read (QJsonObject jsonFile);
