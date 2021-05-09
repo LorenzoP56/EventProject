@@ -30,6 +30,7 @@ public:
      * @param std::string, stringa contenente il titolo univoco dell'evento
      */
     std::pair<int, int> removeEvent(std::string);
+
     /**
      * @brief va avanti di un evento
      */
@@ -56,6 +57,8 @@ public:
     Event* getEvent(const Date&)const;
 
     void removeAllEvent();
+
+    Event* searchEvent (const std::string&) const;
 
     void write(QJsonObject &json) const;
 

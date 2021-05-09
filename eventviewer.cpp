@@ -93,6 +93,12 @@ QString EventViewer::showRemoveEvent()
     return titolo;
 }
 
+QString EventViewer::searchEvent()
+{
+    QString titolo = QInputDialog::getText(this, "Ricerca Evento", "Titolo evento che vuoi ricercare");
+    return titolo;
+}
+
 void EventViewer::finish(std::pair<int, std::vector<QString>> aux) const
 {
     try {
@@ -130,6 +136,7 @@ void EventViewer::addMenus(){
     inserisci = file->addMenu("Inserisci nuovo evento");
     file->addAction(new QAction("Elimina un evento"));
     file->addAction(new QAction("Elimina tutti gli eventi"));
+    file->addAction(new QAction("Ricerca un evento"));
 
     inserisci->addAction(new QAction("Fiera"));
     inserisci->addAction(new QAction("Bachelor"));
@@ -295,6 +302,7 @@ void EventViewer::setController(Controller *c)
 
     connect(file->actions()[1], SIGNAL(triggered()), controller, SLOT(removeEvent()));
     connect(file->actions()[2], SIGNAL(triggered()), controller, SLOT(removeAllEvent()));
+    connect(file->actions()[3], SIGNAL(triggered()), controller, SLOT(searchEvent()));
 
     connect(exit->actions()[2],SIGNAL(triggered()),this,SLOT(close()));
 

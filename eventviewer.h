@@ -73,8 +73,12 @@ public:
 
     QString showRemoveEvent();
 
+    QString searchEvent();
+
     void showEvento(Event* event);
+
     void finish(std::pair<int, std::vector<QString>>) const;
+
     void clean();
 
     void cleanAllEvent ();

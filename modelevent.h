@@ -24,6 +24,7 @@ public:
                         bool pro, u_int part, std::string city, double len) const;
 
     std::pair<int, int> remove(std::string titl) const;
+
     void nextEvent() const;
     void previousEvent() const;
     void firstEvent() const;
@@ -34,6 +35,8 @@ public:
     Event* getEvent(const Date&)const;
 
     void removeAllEvent();
+
+    Event* searchEvent (const std::string &) const;
 
     void write(QJsonObject &json) const;
 

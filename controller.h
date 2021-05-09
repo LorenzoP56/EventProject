@@ -41,7 +41,10 @@ public slots:
     void last() const;
 
     void addEvent(std::pair<int, std::vector<QString>>) const;
+
     void removeEvent() const;
+
+    void searchEvent() const;
 
     void removeAllEvent();
 
