@@ -184,7 +184,10 @@ bool Container<Type>::isEmpty() const{
 template <class Type>
 void Container<Type>::clear(){
     numberOfElements = 0;
+    capacity = 0;
+    Type* aux = new Type[capacity];
     delete [] info;
+    info = aux;
 }
 
 template <class Type>

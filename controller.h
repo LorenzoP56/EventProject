@@ -28,6 +28,8 @@ private:
      */
     void showEvent() const;
 
+    bool checkEmpty () const;
+
     void saveEventToFile (QJsonObject event) const;
 public:
     explicit Controller(QObject *parent = nullptr);

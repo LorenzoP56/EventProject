@@ -54,7 +54,15 @@ void EventViewer::showEvento(Event *event)
     QString visualizza = QString::fromStdString(event->see() + "\nAl prezzo di: " +
                                                 std::to_string(event->getCosto()) + "\nCon capienza massima: " +
                                                 std::to_string(event->getMaxCap()));
-    updateLabel();
+    //updateLabel();
+    QDate* d = new QDate(event->getDate().getYear(),event->getDate().getMonth(),event->getDate().getDay());
+
+    lblDay->setText(QString::number(d->day()));
+    lblMounth->setText(d->longMonthName(d->month()));;
+    lblWeekDay->setText(d->longDayName(d->dayOfWeek()));
+
+    calendar->setCurrentPage(d->year(), d->month());
+
     label->setText(visualizza);
 }
 
