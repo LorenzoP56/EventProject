@@ -10,13 +10,11 @@ void Controller::showEvent() const
 Controller::Controller(QObject *parent) : QObject(parent)
 {}
 
-void Controller::setModel(ModelEvent *m)
-{
+void Controller::setModel(ModelEvent *m){
     model = m;
 }
 
-void Controller::setView(EventViewer *v)
-{
+void Controller::setView(EventViewer *v){
     view = v;
 }
 
