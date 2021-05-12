@@ -20,6 +20,10 @@ public:
     T* getPunt() const;
 };
 
+/**
+ * @brief metodo per ottenere il puntatore a T
+ * @return puntatore punt
+ */
 template<class T>
 T* DeepPtr<T>::getPunt() const{
     return punt;
@@ -37,7 +41,7 @@ template<class T>
 DeepPtr<T> &DeepPtr<T>::operator=(const DeepPtr & dp)
 {
     if(this != &dp){
-        delete punt;//se faccio delete su nullptr non succede nulla
+        delete punt;//ok anche se nullptr
         punt = dp.punt != 0 ? dp.punt->clone() : nullptr;
     }
     return *this;
@@ -48,19 +52,25 @@ DeepPtr<T>::~DeepPtr()
 {
     delete punt;
 }
-
+/**
+ * @brief ridefinizione operatore di dereferenzione
+ */
 template<class T>
 T &DeepPtr<T>::operator*() const
 {
     return *punt;
 }
-
+/**
+ * @brief ridefinizione operatore ->
+ */
 template<class T>
 T *DeepPtr<T>::operator->() const
 {
     return punt;
 }
-
+/**
+ * @brief ridefinizione operatore di uguaglianza
+ */
 template<class T>
 bool DeepPtr<T>::operator==(const DeepPtr & dp) const
 {
@@ -68,7 +78,9 @@ bool DeepPtr<T>::operator==(const DeepPtr & dp) const
         return false;
     return *punt == *dp.punt;
 }
-
+/**
+ * @brief ridefinizione operatore di disuguaglianza
+ */
 template<class T>
 bool DeepPtr<T>::operator!=(const DeepPtr & dp) const
 {

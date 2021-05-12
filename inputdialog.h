@@ -12,7 +12,7 @@
 #include <QDoubleSpinBox>
 #include <QCheckBox>
 #include <vector>
-#include<utility>
+#include <utility>
 
 
 class EventViewer;
@@ -38,12 +38,16 @@ private:
 
     std::pair<int, std::vector<QString>> list;
 
-
+    /**
+     * @brief metodo che agginge i campi da riempire nel dialog
+     */
     void addNewEvent();
 
 public:
     explicit InputDialog(QWidget *parent = nullptr);
-
+    /**
+     * @brief metodo ritorna list
+     */
     std::pair<int, std::vector<QString>> getI()const;
 
 public slots:

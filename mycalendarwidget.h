@@ -11,12 +11,25 @@ class MyCalendarWidget : public QCalendarWidget
     Q_OBJECT
 public:
     MyCalendarWidget(QWidget *parent=Q_NULLPTR);
+    /**
+     * @brief mettodo di aggiunta della data in lista contenente tutte le date degli eventi salvati
+     */
     void addEvent(const QDate&);
+    /**
+     * @brief metodo che elimina da myDates la QDate passata
+     */
     void cleanCalendar(const QDate&);
 protected:
+    /**
+     * @brief override funzione paintCell di QCalendarWidget
+     */
     void paintCell(QPainter *painter, const QRect &rect, const QDate &date) const;
 private:
     QList<QDate> myDates;
+    /**
+     * @brief metodo che controlla la presenza della data nella lista
+     * @return true se presente, false altrimenti
+     */
     bool isIn(const QDate&);
     QDate data;
 
