@@ -39,6 +39,7 @@ void ModelEvent::addNewMarathon(std::string loc, std::string titl, std::string e
 std::pair<int, int> ModelEvent::remove(std::string titl) const{
     return organization->removeEvent(titl);
 }
+
 void ModelEvent::nextEvent() const{
     organization->next();
 }
@@ -61,9 +62,16 @@ u_int ModelEvent::getNumOfEvent() const{
     return organization->getSize();
 }
 
-Event *ModelEvent::getEvent(const Date & d) const
-{
+Event *ModelEvent::getEvent(const Date & d) const{
     return organization->getEvent(d);
+}
+
+void ModelEvent::removeAllEvent(){
+    organization->removeAllEvent();
+}
+
+Event *ModelEvent::searchEvent(const std::string &title) const{
+    return organization->searchEvent(title);
 }
 
 void ModelEvent::write(QJsonObject &json) const{

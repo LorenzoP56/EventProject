@@ -8,9 +8,9 @@ void Organization::addEvent(DeepPtr<Event> evento)
     bool flag = false;
     for (Container<DeepPtr<Event>>::Iterator i = Eventi.begin(); i!=Eventi.end(); ++i){
         if((*i)->getTitle() == evento->getTitle())
-            throw new std::logic_error("evento già inserito");
+            throw new std::logic_error("Evento già inserito");
         if((*i)->getDate() == evento->getDate())
-            throw new std::logic_error("evento deve essere univoco, nella data ne è già presente un altro");
+            throw new std::logic_error("Evento deve essere univoco, nella data ne è già presente un altro");
     }
     for (Container<DeepPtr<Event>>::Iterator i = Eventi.begin(); i!=Eventi.end() && !flag; ++i)
         if((*i)->getDate() > evento->getDate()){
@@ -87,6 +87,20 @@ Event *Organization::getEvent(const Date & d) const
     for(auto it = Eventi.begin(); it != Eventi.end(); it++)
         if((*it)->getDate() == d)
             return (*it).getPunt();
+    return nullptr;
+}
+
+void Organization::removeAllEvent()
+{
+    Eventi.clear();
+}
+
+Event *Organization::searchEvent(const std::string &title) const
+{
+    for(auto it = Eventi.begin(); it != Eventi.end(); it++){
+        if((*it)->getTitle() == title)
+            return (*it).getPunt();
+    }
     return nullptr;
 }
 

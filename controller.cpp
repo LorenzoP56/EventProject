@@ -10,21 +10,17 @@ void Controller::showEvent() const
 Controller::Controller(QObject *parent) : QObject(parent)
 {}
 
-void Controller::setModel(ModelEvent *m)
-{
+void Controller::setModel(ModelEvent *m){
     model = m;
 }
 
-void Controller::setView(EventViewer *v)
-{
+void Controller::setView(EventViewer *v){
     view = v;
 }
 
 void Controller::nextEvent() const
 {
-    if(model->getNumOfEvent() == 0)
-        view->showWarning("Inserire prima almeno un evento");
-    else{
+    if(!checkEmpty()){
         model->nextEvent();
         showEvent();
     }
@@ -32,9 +28,7 @@ void Controller::nextEvent() const
 
 void Controller::previousEvent() const
 {
-    if(model->getNumOfEvent() == 0)
-        view->showWarning("Inserire prima almeno un evento");
-    else{
+    if(!checkEmpty()){
         model->previousEvent();
         showEvent();
     }
@@ -42,9 +36,7 @@ void Controller::previousEvent() const
 
 void Controller::begin()
 {
-    if(model->getNumOfEvent() == 0)
-        view->showWarning("Inserire prima almeno un evento");
-    else{
+    if(!checkEmpty()){
         model->firstEvent();
         showEvent();
     }
@@ -52,9 +44,7 @@ void Controller::begin()
 
 void Controller::last() const
 {
-    if(model->getNumOfEvent() == 0)
-        view->showWarning("Inserire prima almeno un evento");
-    else{
+    if(!checkEmpty()){
         model->lastEvent();
         showEvent();
     }
@@ -97,11 +87,48 @@ void Controller::addEvent(std::pair<int, std::vector<QString>> aux) const
 void Controller::removeEvent() const
 {
     try {
-        QString title = view->showRemoveEvent();
-        std::pair<int, int> aux = model->remove(title.toStdString());
-        view->cleanCalendar(QDate(2021, aux.second, aux.first));  //QUA E' IL PROBLEMA
-        view->clean();
+        if(!checkEmpty()){
+            QString title = view->showRemoveEvent();
+            std::pair<int, int> aux = model->remove(title.toStdString());
+            view->cleanCalendar(QDate(2021, aux.second, aux.first));
+            view->clean();
+        }
     } catch (std::logic_error* e) {
+        view->showWarning(e->what());
+    }
+}
+
+bool Controller::checkEmpty () const {
+    bool empty = false;
+    if(model->getNumOfEvent() == 0){
+        view -> showWarning("Il calendario è vuoto! Impossibile eseguire operazione richiesta");
+        empty = true;
+    }
+    return empty;
+}
+void Controller::searchEvent() const{
+    try {
+        if(!checkEmpty()){
+            QString title = view->searchEvent();
+            Event* e = model->searchEvent(title.toStdString());
+            if(e)
+                view->showEvento(e);
+            else
+                view->showWarning("Nessun evento presente con questo titolo");
+        }
+    }  catch (std::logic_error* d) {
+        view->showWarning(d->what());
+    }
+}
+
+void Controller::removeAllEvent()
+{
+    try {
+        if(!checkEmpty()){
+            model->removeAllEvent();
+            view->cleanAllEvent();
+        }
+    }  catch (std::logic_error* e) {
         view->showWarning(e->what());
     }
 }
@@ -115,31 +142,30 @@ void Controller::takeEvent(const QDate & d)
 
 void Controller::download() const{
 
-    if(model->getNumOfEvent() == 0){
-        view->showWarning("Devi prima inserire almeno un evento");
+    if(!checkEmpty()){
+
+
+    QString fileName = QFileDialog::getExistingDirectory(view, tr("Open Directory"),
+                                                         "/home",
+                                                         QFileDialog::ShowDirsOnly
+                                                         | QFileDialog::DontResolveSymlinks);
+    fileName.append("/eventi.json");
+    QFile saveFile(fileName);
+
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+        view->showWarning("IMPOSSIBILE SALVARE IL FILE");
     }
 
-    else{
+    QJsonObject eventObject;
+    model->write(eventObject);
 
-        QString fileName = QFileDialog::getExistingDirectory(view, tr("Open Directory"),
-                                                             "/home",
-                                                             QFileDialog::ShowDirsOnly
-                                                             | QFileDialog::DontResolveSymlinks);
-        fileName.append("/eventi.json");
-        QFile saveFile(fileName);
+    QJsonDocument saveDoc(eventObject);
+    saveFile.write(saveDoc.toJson());
 
-        if (!saveFile.open(QIODevice::WriteOnly)) {
-            view->showWarning("IMPOSSIBILE SALVARE IL FILE");
-        }
+    view->showWell("Download eventi calendario avvenuto con successo");
 
-        QJsonObject eventObject;
-        model->write(eventObject);
-
-        QJsonDocument saveDoc(eventObject);
-        saveFile.write(saveDoc.toJson());
-
-        view->showWell("Download eventi calendario avvenuto con successo");
     }
+
 }
 
 void Controller::upload(){

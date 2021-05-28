@@ -28,6 +28,8 @@ private:
      */
     void showEvent() const;
 
+    bool checkEmpty () const;
+
     void saveEventToFile (QJsonObject event) const;
 public:
     explicit Controller(QObject *parent = nullptr);
@@ -41,7 +43,12 @@ public slots:
     void last() const;
 
     void addEvent(std::pair<int, std::vector<QString>>) const;
+
     void removeEvent() const;
+
+    void searchEvent() const;
+
+    void removeAllEvent();
 
     void takeEvent(const QDate&);
 
