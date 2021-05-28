@@ -93,10 +93,6 @@ void Controller::removeEvent() const
             view->cleanCalendar(QDate(2021, aux.second, aux.first));
             view->clean();
         }
-        QString title = view->showRemoveEvent();
-        std::pair<int, int> aux = model->remove(title.toStdString());
-        view->cleanCalendar(QDate(2021, aux.second, aux.first));
-        view->clean();
     } catch (std::logic_error* e) {
         view->showWarning(e->what());
     }
