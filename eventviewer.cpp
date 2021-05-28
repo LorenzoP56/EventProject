@@ -27,10 +27,14 @@ void EventViewer::showWarning(const QString & message) const
 {
     QDialog* error = new QDialog();
     error->setLayout(new QHBoxLayout);
-    error->layout()->addWidget(new QLabel(message, error));
+    QLabel* lblMessagge = new QLabel(message, error);
+    lblMessagge->setWordWrap(true);
+    error->layout()->addWidget(lblMessagge);
     error->layout()->setAlignment(Qt::AlignCenter);
     error->setMinimumWidth(120);
     error->setMaximumWidth(450);
+    error->setMinimumHeight(50);
+    error->setMaximumHeight(120);
     error->setStyleSheet("color:red");
 
     error->show();
@@ -40,10 +44,14 @@ void EventViewer::showWell(const QString & message) const
 {
     QDialog* well = new QDialog();
     well->setLayout(new QHBoxLayout);
-    well->layout()->addWidget(new QLabel(message, well));
+    QLabel* lblMessagge = new QLabel(message, well);
+    lblMessagge->setWordWrap(true);
+    well->layout()->addWidget(lblMessagge);
     well->layout()->setAlignment(Qt::AlignCenter);
     well->setMinimumWidth(120);
     well->setMaximumWidth(450);
+    well->setMinimumHeight(50);
+    well->setMaximumHeight(120);
     well->setStyleSheet("color:green");
 
     well->show();
@@ -230,6 +238,8 @@ void EventViewer::addLabel(){
 
     label->setMargin(25);
     label->setStyleSheet("background:#383232; color: #f3efe8; font-size: 15px;");
+    label->setWordWrap(true);
+    label->setFixedWidth(350);
     lblVLayout->addWidget(label,80);
 
     lblCalendarLayout->addLayout(lblVLayout);
@@ -238,8 +248,20 @@ void EventViewer::addLabel(){
 void EventViewer::addControls()
 {
 
-    previuosEvent = new QPushButton("Precedente evento", this);
-    nextEvent = new QPushButton("Prossimo evento", this);
+    previuosEvent = new QPushButton("Precedente",this);
+
+    /*QPixmap lPixmap(":/Resources/left-arrow.png");
+    QIcon lButtonIcon(lPixmap);
+    previuosEvent->setIcon(lButtonIcon);
+    previuosEvent->setIconSize(lPixmap.rect().size());*/
+
+    nextEvent = new QPushButton("Successivo", this);
+    /*QPixmap rPixmap(":/Resources/right-arrow.png");
+    QIcon rButtonIcon(rPixmap);
+    nextEvent->setIcon(rButtonIcon);
+    nextEvent->setIconSize(rPixmap.rect().size());*/
+
+
     firstEvent = new QPushButton("Primo evento dell'anno", this);
     lastEvent = new QPushButton("Ultimo evento dell'anno", this);
     download = new QPushButton("Scarica calendario", this);
