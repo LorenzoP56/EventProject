@@ -20,6 +20,9 @@ class InputDialogT : public QDialog
     Q_OBJECT
 public:
     InputDialogT(QWidget* parent = nullptr);
+    /**
+     * @brief metodo ritorna list
+     */
     std::pair<int, std::vector<QString>> getI()const;
 private:
     QLineEdit* eLoc;
@@ -40,7 +43,9 @@ private:
 
     std::pair<int, std::vector<QString>> list;
 
-
+    /**
+     * @brief metodo che agginge i campi da riempire nel dialog
+     */
     void addNewEvent();
 public slots:
     void getInfo();

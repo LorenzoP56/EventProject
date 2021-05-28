@@ -59,6 +59,7 @@ void InputDialog::addNewEvent(){
     QLabel* lblDate= new QLabel("Data evento: ",this);
     eDate = new QDateEdit(this);
     eDate->setMinimumDate(QDate(2021,1,1));
+    eDate->setMaximumDate(QDate(2021, 12,31));
     lytMain->addRow(lblDate,eDate);
 
     QLabel* lblRating = new QLabel("Difficoltà evento",this);

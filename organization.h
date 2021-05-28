@@ -52,8 +52,20 @@ public:
      * @return size vettore
      */
     u_int getSize() const;
+    /**
+     * @brief getter evento in pos index
+     * @param index, indice dell' evento da prelevare
+     * @return evento prelevato o lancia std::out_of_range con relativo messaggio d'errore
+     */
     Event* getEvent(u_int) const;
+    /**
+     * @brief getter pos current event
+     * @return intero della posizione corrente
+     */
     u_int getCurrentEvent() const;
+    /**
+     * @brief getter evento nella data passata
+     */
     Event* getEvent(const Date&)const;
 
     void removeAllEvent();

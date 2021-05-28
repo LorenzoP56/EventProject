@@ -37,13 +37,23 @@ public:
     void setModel(ModelEvent* m);
     void setView(EventViewer* v);
 public slots:
+    /**
+     * @brief metodi che richiamano metodo del modello, con corrispondente con alcuni controlli antecedenti
+     */
     void nextEvent() const;
     void previousEvent() const;
     void begin();
     void last() const;
 
+    /**
+     * @brief metodo che richiama il modello e a seconda dell' intero messo come first della variabile
+     * inserisce nel nostro container l'elemento relativo
+     */
     void addEvent(std::pair<int, std::vector<QString>>) const;
 
+    /**
+    @brief metodo che rimuove un evento dal calendario tramite titolo, che è univico e viene dato dall'utente
+    */
     void removeEvent() const;
 
     void searchEvent() const;

@@ -3,7 +3,7 @@
 #include<string>
 #include<date.h>
 #include<ratingerror.h>
-#include <QJsonObject>
+#include<QJsonObject>
 
 class Event
 {

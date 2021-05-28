@@ -93,6 +93,10 @@ void Controller::removeEvent() const
             view->cleanCalendar(QDate(2021, aux.second, aux.first));
             view->clean();
         }
+        QString title = view->showRemoveEvent();
+        std::pair<int, int> aux = model->remove(title.toStdString());
+        view->cleanCalendar(QDate(2021, aux.second, aux.first));
+        view->clean();
     } catch (std::logic_error* e) {
         view->showWarning(e->what());
     }
@@ -175,9 +179,6 @@ void Controller::upload(){
     }
 
     else{
-        /*QString name = QDir::currentPath();
-        name.append("/eventi.json");*/
-        //"/Users/matteopillon/Documents/Programmazione Oggetti/eventi.json"
 
         QString fileName = QFileDialog::getOpenFileName(view,tr("File json da importare"),"",tr("Eventi (*.json)"));
 
