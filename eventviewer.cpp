@@ -249,19 +249,7 @@ void EventViewer::addControls()
 {
 
     previuosEvent = new QPushButton("Precedente",this);
-
-    /*QPixmap lPixmap(":/Resources/left-arrow.png");
-    QIcon lButtonIcon(lPixmap);
-    previuosEvent->setIcon(lButtonIcon);
-    previuosEvent->setIconSize(lPixmap.rect().size());*/
-
     nextEvent = new QPushButton("Successivo", this);
-    /*QPixmap rPixmap(":/Resources/right-arrow.png");
-    QIcon rButtonIcon(rPixmap);
-    nextEvent->setIcon(rButtonIcon);
-    nextEvent->setIconSize(rPixmap.rect().size());*/
-
-
     firstEvent = new QPushButton("Primo evento dell'anno", this);
     lastEvent = new QPushButton("Ultimo evento dell'anno", this);
     download = new QPushButton("Scarica calendario", this);
@@ -308,6 +296,10 @@ void EventViewer::updateCalendar(const QDate &d) const{
     calendar->addEvent(d);
 }
 
+void EventViewer::changeCalendarPage(int year, int month){
+    calendar->setCurrentPage(year,month);
+}
+
 void EventViewer::setController(Controller *c)
 {
     controller = c;
@@ -340,7 +332,5 @@ void EventViewer::setController(Controller *c)
     connect(exit->actions()[1],SIGNAL(triggered()),controller,SLOT(upload()));
 
     connect(calendar, SIGNAL(ShowEventAux(const QDate&)), controller, SLOT(takeEvent(const QDate&)));
-
-
 }
 

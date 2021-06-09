@@ -115,6 +115,8 @@ public:
      */
     void updateCalendar (const QDate&) const;
 
+    void changeCalendarPage(int year, int month);
+
 public slots:
     /**
      * @brief metodi che creano e mostrano i nostri custom Dialog, per l'inserimento dei vari eventi nel calendario

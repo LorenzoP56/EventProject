@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Resources/index.png</file>
-        <file>Resources/left-arrow.png</file>
-        <file>Resources/right-arrow.png</file>
+        <file>Resources/calendar.png</file>
     </qresource>
 </RCC>

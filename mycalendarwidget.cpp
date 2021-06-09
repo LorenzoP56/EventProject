@@ -30,7 +30,7 @@ void MyCalendarWidget::paintCell(QPainter *painter, const QRect &rect, const QDa
 {
     if(myDates.contains(date)){
         painter->save();
-        painter->drawImage(rect, QImage(":/Resources/index.png"));
+        painter->drawImage(rect, QImage(":/Resources/calendar.png"));
         painter->restore();
     }
     else
