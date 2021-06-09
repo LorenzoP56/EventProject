@@ -5,6 +5,7 @@
 #include<QPainter>
 #include<QRect>
 #include<eventviewer.h>
+#include<QMargins>
 
 class MyCalendarWidget : public QCalendarWidget
 {

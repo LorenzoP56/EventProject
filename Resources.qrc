@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
         <file>Resources/index.png</file>
-        <file>Resources/calendar.png</file>
     </qresource>
 </RCC>

@@ -28,13 +28,25 @@ void MyCalendarWidget::cleanAllEvent(){
 }
 void MyCalendarWidget::paintCell(QPainter *painter, const QRect &rect, const QDate &date) const
 {
+
+
     if(myDates.contains(date)){
         painter->save();
-        painter->drawImage(rect, QImage(":/Resources/calendar.png"));
+        /*QImage img (":/Resources/calendar.png");
+        painter->drawImage(rect, img);*/
+
+        painter->setRenderHint(QPainter::Antialiasing);
+        painter->setPen(Qt::NoPen);
+        painter->setBrush(QColor(51,204,255));
+        painter->drawEllipse(QPoint(rect.x()+rect.width()/2,rect.y()+rect.height()/2),15,15);
+        painter->setPen(QColor(255, 255, 255));
+        painter->drawText(rect, Qt::AlignCenter, QString::number(date.day()));
         painter->restore();
     }
+
     else
         QCalendarWidget::paintCell(painter, rect, date);
+
 }
 
 bool MyCalendarWidget::isIn(const QDate & d)
