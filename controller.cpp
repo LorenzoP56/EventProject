@@ -207,8 +207,7 @@ void Controller::upload(){
 
             if(model->getNumOfEvent() != 0){
                 view->showWell("Importazione eventi avvenuta con successo");
-                view->changeCalendarPage(model->getEvent(model->getNumOfEvent()-1)->getDate().getYear(),
-                                         model->getEvent(model->getNumOfEvent()-1)->getDate().getMonth());
+                view->changeCalendarPage(model->getEvent(model->getNumOfEvent()-1)->getDate());
             }
         }
     }

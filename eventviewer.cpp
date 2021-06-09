@@ -20,7 +20,8 @@ EventViewer::EventViewer(QWidget *parent) : QWidget(parent){
     addControls();
 
     setLayout(mainLayout);
-    resize(QSize(1024, 720));
+    //resize(QSize(1024, 720));
+    setFixedSize(QSize(1024,720));
 }
 
 void EventViewer::showWarning(const QString & message) const
@@ -296,8 +297,9 @@ void EventViewer::updateCalendar(const QDate &d) const{
     calendar->addEvent(d);
 }
 
-void EventViewer::changeCalendarPage(int year, int month){
-    calendar->setCurrentPage(year,month);
+void EventViewer::changeCalendarPage(Date d){
+    calendar->setCurrentPage(d.getYear(),d.getMonth());
+    calendar->showMyEvent(QDate(d.getYear(),d.getMonth(),d.getDay()));
 }
 
 void EventViewer::setController(Controller *c)

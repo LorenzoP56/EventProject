@@ -115,7 +115,7 @@ public:
      */
     void updateCalendar (const QDate&) const;
 
-    void changeCalendarPage(int year, int month);
+    void changeCalendarPage(Date);
 
 public slots:
     /**
